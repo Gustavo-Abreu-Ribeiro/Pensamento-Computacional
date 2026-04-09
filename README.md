@@ -106,7 +106,7 @@ Um exemplo prático é a necessidade de conciliar estudos, faculdade e trabalho.
 
 ---
 
-# Aplicação do Pensamento Computacional (Versão Aprofundada)
+# Aplicação do Pensamento Computacional 
 
 ## 1. Decomposição do Problema
 
