@@ -1,8 +1,9 @@
-Resolução: Controle de Acesso de Alunos
+# Resolução: Controle de Acesso de Alunos
 Este algoritmo foi desenvolvido como parte da disciplina de Pensamento Computacional, visando automatizar e organizar o processo de entrada de estudantes em sala de aula através de lógica sistemática.
 
-1. Algoritmo em Pseudocódigo
-Plaintext
+## 1. Algoritmo em Pseudocódigo
+
+```
 Algoritmo Controle_de_Acesso_Sala
 Variáveis:
     aluno_atual: Texto
@@ -32,18 +33,11 @@ Início
 
     Escrever("Processo de verificação concluído para todos os alunos da fila.")
 Fim
-2. Explicação da Estrutura Lógica
-Laço de Repetição (Para): Utilizado para garantir que nenhum aluno na fila seja esquecido. O algoritmo só encerra quando o contador atinge o número total de pessoas presentes na entrada.
+```
+## 2. Explicação da Estrutura Lógica
+- Laço de Repetição (Para): Utilizado para garantir que nenhum aluno na fila seja esquecido. O algoritmo só encerra quando o contador atinge o número total de pessoas presentes na entrada.
+- Estrutura de Decisão (Se-Então-Senão): * O Se valida a identidade contra a base de dados (lista oficial).
+- O Então executa a ação de entrada.
+- O Senão isola os casos de erro, emitindo o alerta necessário para o controle de acesso.
 
-Estrutura de Decisão (Se-Então-Senão): * O Se valida a identidade contra a base de dados (lista oficial).
 
-O Então executa a ação de entrada.
-
-O Senão isola os casos de erro, emitindo o alerta necessário para o controle de acesso.
-
-3. Identificação do Aluno
-Disciplina: Pensamento Computacional
-
-Atividade: Lógica e Algoritmos (A2)
-
-Instituição: UDF - Centro Universitário do Distrito Federal
