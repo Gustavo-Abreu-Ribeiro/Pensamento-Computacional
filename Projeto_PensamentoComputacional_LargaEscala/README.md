@@ -53,6 +53,24 @@ O sistema foi concebido considerando:
 
 Essas características tornam o problema computacionalmente relevante e exigem soluções eficientes e escaláveis.
 
+### Caracterização como SaaS
+
+O StudyFlow também pode ser entendido como um SaaS educacional, pois seria oferecido como uma aplicação acessada pela internet, sem necessidade de instalação local pelos usuários finais.
+
+Nesse modelo, escolas, professores e alunos poderiam utilizar a plataforma por meio de contas cadastradas, com dados armazenados em nuvem e recursos disponibilizados de forma contínua.
+
+Como SaaS, o sistema poderia incluir:
+
+- Acesso via navegador  
+- Cadastro de instituições, professores e alunos  
+- Planos de assinatura ou contratação institucional  
+- Armazenamento seguro dos dados educacionais em nuvem  
+- Painel administrativo para acompanhamento de turmas  
+- Relatórios de desempenho por aluno, turma ou instituição  
+- Escalabilidade para atender múltiplas instituições simultaneamente  
+
+Essa abordagem reforça a proposta de larga escala, pois permite que o mesmo sistema seja utilizado por diferentes grupos de usuários, mantendo personalização, disponibilidade e evolução contínua da plataforma.
+
 ---
 
 ## Pensamento Computacional Aplicado
@@ -96,6 +114,75 @@ Metodologia: Scrum
 
 - Sprints de duas semanas  
 - Uso de GitHub Projects, Issues e quadro Kanban  
+
+---
+
+## Implementação Atual
+
+Foi desenvolvida uma versão web funcional do StudyFlow com React, TypeScript, Vite e estrutura preparada para Tauri.
+
+A aplicação atual apresenta uma interface moderna de SaaS educacional, com painel de acompanhamento, configuração de aluno, instituição e turma, registro de respostas e recomendação adaptativa.
+
+Recursos implementados:
+
+- Menu inicial com navegação entre páginas internas do sistema  
+- Catálogo de trilhas de aprendizagem por objetivo educacional  
+- Página específica de painel para acompanhamento do aluno e da turma  
+- Página de configurações com sete temas visuais selecionáveis  
+- Dashboard com métricas de nível, taxa de acerto, tempo médio e alunos ativos  
+- Cadastro simples de aluno, instituição e turma dentro da sessão  
+- Atividades com alternativas e correção automática  
+- Cronômetro real para medir o tempo de resposta do aluno  
+- Histórico de desempenho por trilha, conteúdo, resultado, tempo e dificuldade  
+- Algoritmo de recomendação baseado em acertos, erros e tempo médio  
+- Interface visual mais moderna, limpa e profissional para representar um SaaS educacional  
+
+Temas disponíveis:
+
+- Moderno  
+- Escuro  
+- Pastel  
+- Terroso  
+- Vibrante  
+- Cores fortes  
+- Neo brutalism  
+
+### Acesso ao SaaS
+
+Com o servidor de desenvolvimento em execução, o app pode ser acessado pelo navegador no endereço:
+
+[http://127.0.0.1:1420/](http://127.0.0.1:1420/)
+
+Caso o Vite utilize outra porta, o endereço correto aparecerá no terminal após executar `npm run dev` dentro da pasta `codigo`.
+
+### Rodar como aplicação web
+
+```bash
+cd codigo
+npm install
+npm run dev
+```
+
+### Rodar como aplicação desktop com Tauri
+
+Para usar o Tauri, é necessário ter Node.js, npm e Rust instalados.
+
+```bash
+cd codigo
+npm install
+npm run tauri dev
+```
+
+### Estrutura criada
+
+- `README.md`: documentação principal do projeto
+- `Design.md`: descrição da arquitetura e módulos do sistema
+- `Desafios.md`: desafios técnicos e de larga escala
+- `Diagrama.png`: diagrama do sistema
+- `codigo`: aplicação web/desktop e arquivos necessários para execução
+- `codigo/src`: interface, dados de exemplo, cronômetro real e algoritmo de recomendação
+- `codigo/src-tauri`: configuração inicial para gerar app desktop
+- `codigo/package.json`: scripts e dependências do projeto
 
 ---
 
