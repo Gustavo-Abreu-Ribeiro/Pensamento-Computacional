@@ -502,23 +502,23 @@ input:focus-visible {
 }
 
 .brand-mark {
-  align-items: center;
-  background: linear-gradient(135deg, var(--primary), var(--primary-strong));
-  border-radius: var(--radius-sm);
-  color: #ffffff !important;
-  display: grid;
-  font-size: 0.95rem;
-  font-weight: 900;
-  height: 46px;
-  justify-content: center;
-  letter-spacing: 0;
-  line-height: 1;
-  place-items: center;
-  text-align: center;
-  width: 46px;
-}
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+    border-radius: var(--radius-sm);
+    color: #ffffff !important;
+    display: grid;
+    font-size: 1rem;
+    font-weight: 900;
+    height: 56px;
+    justify-content: center;
+    letter-spacing: 0;
+    line-height: 1;
+    place-items: center;
+    text-align: center;
+    width: 56px;
+  }
 
-.menu-toggle {
+  .menu-toggle {
   align-items: center;
   background: var(--surface-solid);
   border: 1px solid var(--border);
@@ -1705,10 +1705,15 @@ h3 {
   }
 
   .brand-mark {
+    display: grid;
+    place-items: center;
     border-radius: 12px;
     font-size: 0.78rem;
+    font-weight: 900;
     height: 40px;
     width: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+    color: #ffffff !important;
   }
 
   .brand strong {
