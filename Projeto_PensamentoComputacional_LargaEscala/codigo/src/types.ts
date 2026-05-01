@@ -6,7 +6,6 @@ export type Route =
   | "painel"
   | "atividade"
   | "historico"
-  | "implantacao"
   | "configuracoes";
 
 export type AuthProvider = "email" | "google" | "microsoft" | "institucional";

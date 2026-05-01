@@ -28,7 +28,6 @@ const routeLabels: Record<Route, string> = {
   painel: "Painel",
   atividade: "Atividade",
   historico: "Histórico",
-  implantacao: "Hospedagem",
   configuracoes: "Configurações"
 };
 
@@ -343,11 +342,6 @@ export default function App() {
             <strong>Acompanhar painel</strong>
             <p>Visualize progresso, desempenho recente e recomendação pedagógica.</p>
           </button>
-          <button className="quick-card" type="button" onClick={() => navigate("implantacao")}>
-            <span>03</span>
-            <strong>Preparar hospedagem</strong>
-            <p>Veja os passos para publicar a aplicação em um ambiente web real.</p>
-          </button>
         </section>
       </>
     );
@@ -599,51 +593,6 @@ export default function App() {
     );
   }
 
-  function renderDeployment() {
-    return (
-      <section className="page-stack">
-        <section className="settings-panel">
-          <p className="eyebrow">Produção</p>
-          <h2>Preparação para hospedagem real</h2>
-          <p>
-            O frontend já pode ser publicado como aplicação estática após `npm run build`.
-            Em um SaaS real, autenticação SSO, banco de dados e APIs ficariam em serviços de backend.
-          </p>
-        </section>
-
-        <section className="deployment-grid">
-          <article className="deployment-card">
-            <span>Frontend</span>
-            <h3>Vercel, Netlify ou Cloudflare Pages</h3>
-            <p>Publica a pasta `dist` gerada pelo Vite e fornece link HTTPS público.</p>
-          </article>
-          <article className="deployment-card">
-            <span>Autenticação</span>
-            <h3>OAuth/OIDC</h3>
-            <p>Integra Google Workspace, Microsoft Entra ID ou provedor institucional.</p>
-          </article>
-          <article className="deployment-card">
-            <span>Dados</span>
-            <h3>Backend e banco</h3>
-            <p>Persistência de alunos, trilhas, registros e relatórios em banco seguro.</p>
-          </article>
-        </section>
-
-        <section className="module-list">
-          <h3>Checklist de produção</h3>
-          <ul>
-            <li>Configurar domínio da instituição</li>
-            <li>Gerar build com `npm run build`</li>
-            <li>Publicar `codigo/dist` em hospedagem web</li>
-            <li>Conectar SSO real via OAuth/OIDC</li>
-            <li>Criar API para persistir desempenho e histórico</li>
-            <li>Aplicar políticas de privacidade para dados educacionais</li>
-          </ul>
-        </section>
-      </section>
-    );
-  }
-
   function renderSettings() {
     return (
       <section className="page-stack">
@@ -692,9 +641,7 @@ export default function App() {
             ? "Ambiente de atividade"
             : route === "historico"
               ? "Histórico e análise"
-              : route === "implantacao"
-                ? "Hospedagem e SSO"
-                : "Configurações";
+            : "Configurações";
 
   return (
     <>
@@ -755,7 +702,6 @@ export default function App() {
             {route === "painel" && renderDashboard()}
             {route === "atividade" && renderActivity()}
             {route === "historico" && renderHistory()}
-            {route === "implantacao" && renderDeployment()}
             {route === "configuracoes" && renderSettings()}
 
             <footer className="app-footer">
