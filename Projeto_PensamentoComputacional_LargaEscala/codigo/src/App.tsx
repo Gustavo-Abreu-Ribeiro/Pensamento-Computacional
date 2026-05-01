@@ -31,6 +31,18 @@ const routeLabels: Record<Route, string> = {
   configuracoes: "Configurações"
 };
 
+const difficultyLabels: Record<Student["level"], string> = {
+  iniciante: "Iniciante",
+  intermediario: "Intermediário",
+  avancado: "Avançado"
+};
+
+const actionLabels: Record<"avancar" | "revisar" | "praticar", string> = {
+  avancar: "Avançar",
+  revisar: "Revisar",
+  praticar: "Praticar"
+};
+
 const themes = [
   {
     id: "default",
@@ -342,7 +354,7 @@ export default function App() {
       <section className="metrics-grid" aria-label="Resumo do aluno">
         <article className="metric-card accent-blue">
           <span>Nível atual</span>
-          <strong>{student.level}</strong>
+          <strong>{difficultyLabels[student.level]}</strong>
         </article>
         <article className="metric-card accent-green">
           <span>Taxa geral</span>
@@ -500,7 +512,7 @@ export default function App() {
           <aside className="insights-panel">
             <div className={`recommendation ${recommendation.action}`}>
               <span>Próxima decisão</span>
-              <strong>{recommendation.action}</strong>
+              <strong>{actionLabels[recommendation.action]}</strong>
               <p>{recommendation.message}</p>
             </div>
             <div className="module-list">
@@ -527,7 +539,7 @@ export default function App() {
               <p className="eyebrow">{selectedTrail.title}</p>
               <h2>{activityStarted ? currentActivity.title : "Ambiente da trilha"}</h2>
             </div>
-            <span className="difficulty">{currentActivity.difficulty}</span>
+            <span className="difficulty">{difficultyLabels[currentActivity.difficulty]}</span>
           </div>
 
           {!activityStarted ? (
@@ -569,7 +581,7 @@ export default function App() {
                 <div className="code-challenge">
                   <p>{currentActivity.prompt}</p>
                   <textarea
-                    aria-label="Resposta em codigo"
+                    aria-label="Resposta em código"
                     onChange={(event) => setCodeAnswer(event.target.value)}
                     spellCheck={false}
                     value={codeAnswer}
@@ -588,7 +600,7 @@ export default function App() {
                     </p>
                   </div>
                   <details className="sample-answer">
-                    <summary>Ver exemplo de solucao</summary>
+                    <summary>Ver exemplo de solução</summary>
                     <pre>{currentActivity.sampleAnswer}</pre>
                   </details>
                 </div>
@@ -626,7 +638,7 @@ export default function App() {
         <aside className="insights-panel">
           <div className={`recommendation ${recommendation.action}`}>
             <span>Recomendação atual</span>
-            <strong>{recommendation.action}</strong>
+            <strong>{actionLabels[recommendation.action]}</strong>
             <p>{recommendation.message}</p>
           </div>
           <div className="module-list">
@@ -673,7 +685,7 @@ export default function App() {
                   <span>{record.title}</span>
                   <span>{record.correct ? "Acerto" : "Erro"}</span>
                   <span>{record.responseSeconds}s</span>
-                  <span>{record.difficulty}</span>
+                  <span>{difficultyLabels[record.difficulty]}</span>
                 </div>
               );
             })

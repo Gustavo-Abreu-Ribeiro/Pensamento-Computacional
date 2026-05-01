@@ -28,7 +28,7 @@ export function recommendNextStep(
     return {
       nextDifficulty: currentDifficulty,
       action: "praticar",
-      message: "Comece por uma atividade base para criar o primeiro historico."
+      message: "Comece por uma atividade base para criar o primeiro histórico."
     };
   }
 
@@ -40,7 +40,7 @@ export function recommendNextStep(
     return {
       nextDifficulty: difficultyOrder[Math.min(currentIndex + 1, difficultyOrder.length - 1)],
       action: "avancar",
-      message: "Bom desempenho. A trilha pode subir a dificuldade."
+      message: "Bom desempenho. A trilha pode aumentar a dificuldade."
     };
   }
 
@@ -48,7 +48,7 @@ export function recommendNextStep(
     return {
       nextDifficulty: difficultyOrder[Math.max(currentIndex - 1, 0)],
       action: "revisar",
-      message: "Muitos erros recentes. O ideal agora e revisar o conteudo anterior."
+      message: "Muitos erros recentes. O ideal agora é revisar o conteúdo anterior."
     };
   }
 
@@ -56,13 +56,13 @@ export function recommendNextStep(
     return {
       nextDifficulty: currentDifficulty,
       action: "revisar",
-      message: "O tempo medio esta alto. Uma revisao curta pode destravar o progresso."
+      message: "O tempo médio está alto. Uma revisão curta pode destravar o progresso."
     };
   }
 
   return {
     nextDifficulty: currentDifficulty,
     action: "praticar",
-    message: "Desempenho estavel. Continue praticando neste nivel."
+    message: "Desempenho estável. Continue praticando neste nível."
   };
 }

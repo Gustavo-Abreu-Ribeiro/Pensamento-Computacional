@@ -3,36 +3,36 @@ import type { Activity, LearningTrail } from "./types";
 export const trails: LearningTrail[] = [
   {
     id: "algoritmos",
-    title: "Logica e algoritmos",
-    description: "Base para decompor problemas, criar sequencias de passos e avaliar solucoes.",
+    title: "Lógica e algoritmos",
+    description: "Base para decompor problemas, criar sequências de passos e avaliar soluções.",
     target: "Alunos iniciando o pensamento computacional",
     color: "blue"
   },
   {
     id: "padroes",
-    title: "Padroes e abstracao",
-    description: "Atividades para reconhecer repeticoes, generalizar ideias e modelar informacoes.",
-    target: "Turmas em transicao para projetos maiores",
+    title: "Padrões e abstração",
+    description: "Atividades para reconhecer repetições, generalizar ideias e modelar informações.",
+    target: "Turmas em transição para projetos maiores",
     color: "green"
   },
   {
     id: "programacao",
-    title: "Programacao pratica",
-    description: "Pequenos desafios de codigo para transformar regras em solucoes verificaveis.",
-    target: "Alunos que precisam exercitar sintaxe, condicoes e funcoes",
+    title: "Programação prática",
+    description: "Pequenos desafios de código para transformar regras em soluções verificáveis.",
+    target: "Alunos que precisam exercitar sintaxe, condições e funções",
     color: "cyan"
   },
   {
     id: "dados",
-    title: "Dados e recomendacao",
-    description: "Coleta, leitura de historico, metricas e decisao baseada em evidencias.",
-    target: "Alunos conectando dados a decisoes pedagogicas",
+    title: "Dados e recomendação",
+    description: "Coleta, leitura de histórico, métricas e decisão baseada em evidências.",
+    target: "Alunos conectando dados a decisões pedagógicas",
     color: "pink"
   },
   {
     id: "escala",
     title: "Sistemas de larga escala",
-    description: "Conceitos de desempenho, personalizacao, seguranca e aplicacoes SaaS.",
+    description: "Conceitos de desempenho, personalização, segurança e aplicações SaaS.",
     target: "Alunos conectando software a produtos reais",
     color: "orange"
   }
@@ -43,13 +43,13 @@ export const activities: Activity[] = [
     id: 1,
     type: "quiz",
     trailId: "algoritmos",
-    title: "O que e um algoritmo?",
+    title: "O que é um algoritmo?",
     topic: "Algoritmos",
     difficulty: "iniciante",
     estimatedMinutes: 8,
     question: "Qual alternativa define melhor um algoritmo?",
     options: [
-      "Uma sequencia finita de passos para resolver um problema",
+      "Uma sequência finita de passos para resolver um problema",
       "Um programa que funciona somente com internet",
       "Uma ideia vaga sem regras claras"
     ],
@@ -65,9 +65,9 @@ export const activities: Activity[] = [
     estimatedMinutes: 9,
     question: "Para que serve uma estrutura condicional em um algoritmo?",
     options: [
-      "Escolher caminhos diferentes de acordo com uma condicao",
+      "Escolher caminhos diferentes de acordo com uma condição",
       "Repetir um conjunto de passos infinitamente",
-      "Guardar informacoes sobre o usuario"
+      "Guardar informações sobre o usuário"
     ],
     correctOption: 0
   },
@@ -75,14 +75,14 @@ export const activities: Activity[] = [
     id: 3,
     type: "quiz",
     trailId: "algoritmos",
-    title: "Repeticao em algoritmos",
+    title: "Repetição em algoritmos",
     topic: "Algoritmos",
     difficulty: "iniciante",
     estimatedMinutes: 10,
-    question: "Qual e a finalidade de um laco de repeticao?",
+    question: "Qual é a finalidade de um laço de repetição?",
     options: [
-      "Executar um conjunto de instrucoes varias vezes enquanto uma condicao se mantem",
-      "Descartar dados apos cada execucao",
+      "Executar um conjunto de instruções várias vezes enquanto uma condição se mantém",
+      "Descartar dados após cada execução",
       "Impedir que o algoritmo termine"
     ],
     correctOption: 0
@@ -91,7 +91,7 @@ export const activities: Activity[] = [
     id: 4,
     type: "quiz",
     trailId: "algoritmos",
-    title: "Ordem das instrucoes",
+    title: "Ordem das instruções",
     topic: "Sequenciamento",
     difficulty: "iniciante",
     estimatedMinutes: 8,
@@ -108,13 +108,13 @@ export const activities: Activity[] = [
     type: "quiz",
     trailId: "algoritmos",
     title: "Complexidade intuitiva",
-    topic: "Eficiencia",
+    topic: "Eficiência",
     difficulty: "intermediario",
     estimatedMinutes: 14,
-    question: "Se uma solucao compara todos os pares de uma lista, qual risco aparece quando a lista cresce?",
+    question: "Se uma solução compara todos os pares de uma lista, qual risco aparece quando a lista cresce?",
     options: [
-      "O numero de comparacoes cresce muito rapidamente",
-      "A solucao passa a gastar memoria zero",
+      "O número de comparações cresce muito rapidamente",
+      "A solução passa a gastar memória zero",
       "A lista deixa de ter elementos repetidos"
     ],
     correctOption: 0
@@ -124,14 +124,14 @@ export const activities: Activity[] = [
     type: "quiz",
     trailId: "algoritmos",
     title: "Invariantes",
-    topic: "Raciocinio algoritmico",
+    topic: "Raciocínio algorítmico",
     difficulty: "avancado",
     estimatedMinutes: 18,
-    question: "Em um algoritmo iterativo, o que e uma invariante?",
+    question: "Em um algoritmo iterativo, o que é uma invariante?",
     options: [
-      "Uma propriedade que permanece verdadeira ao longo das iteracoes",
-      "Uma variavel que nunca pode ser lida",
-      "Uma excecao que interrompe o programa"
+      "Uma propriedade que permanece verdadeira ao longo das iterações",
+      "Uma variável que nunca pode ser lida",
+      "Uma exceção que interrompe o programa"
     ],
     correctOption: 0
   },
@@ -140,15 +140,15 @@ export const activities: Activity[] = [
     id: 7,
     type: "quiz",
     trailId: "padroes",
-    title: "Reconhecimento de padroes",
+    title: "Reconhecimento de padrões",
     topic: "Pensamento computacional",
     difficulty: "iniciante",
     estimatedMinutes: 10,
-    question: "Qual informacao ajuda a identificar dificuldades recorrentes em registros de aprendizado?",
+    question: "Qual informação ajuda a identificar dificuldades recorrentes em registros de aprendizado?",
     options: [
-      "A frequencia de erros por conteudo",
+      "A frequência de erros por conteúdo",
       "A cor preferida do aluno",
-      "O horario de acesso ao sistema"
+      "O horário de acesso ao sistema"
     ],
     correctOption: 0
   },
@@ -156,7 +156,7 @@ export const activities: Activity[] = [
     id: 8,
     type: "quiz",
     trailId: "padroes",
-    title: "Abstracao de entidades",
+    title: "Abstração de entidades",
     topic: "Modelagem",
     difficulty: "intermediario",
     estimatedMinutes: 12,
@@ -168,15 +168,15 @@ export const activities: Activity[] = [
     id: 9,
     type: "quiz",
     trailId: "padroes",
-    title: "Abstracao de informacoes",
+    title: "Abstração de informações",
     topic: "Modelagem",
     difficulty: "intermediario",
     estimatedMinutes: 12,
-    question: "Qual e o principal proposito da abstracao em sistemas de aprendizado?",
+    question: "Qual é o principal propósito da abstração em sistemas de aprendizado?",
     options: [
-      "Reduzir detalhes para representar apenas o que e relevante",
-      "Aumentar a complexidade de cada funcao",
-      "Guardar todos os dados possiveis sem classificacao"
+      "Reduzir detalhes para representar apenas o que é relevante",
+      "Aumentar a complexidade de cada função",
+      "Guardar todos os dados possíveis sem classificação"
     ],
     correctOption: 0
   },
@@ -184,15 +184,15 @@ export const activities: Activity[] = [
     id: 10,
     type: "quiz",
     trailId: "padroes",
-    title: "Generalizacao",
-    topic: "Abstracao",
+    title: "Generalização",
+    topic: "Abstração",
     difficulty: "avancado",
     estimatedMinutes: 17,
-    question: "Qual decisao mostra boa generalizacao em um sistema de trilhas?",
+    question: "Qual decisão mostra boa generalização em um sistema de trilhas?",
     options: [
-      "Criar uma estrutura reutilizavel de atividade em vez de uma tela fixa por questao",
-      "Duplicar todo o codigo para cada pergunta nova",
-      "Misturar dados, estilo e autenticacao em uma unica funcao"
+      "Criar uma estrutura reutilizável de atividade em vez de uma tela fixa por questão",
+      "Duplicar todo o código para cada pergunta nova",
+      "Misturar dados, estilo e autenticação em uma única função"
     ],
     correctOption: 0
   },
@@ -201,28 +201,28 @@ export const activities: Activity[] = [
     id: 11,
     type: "code",
     trailId: "programacao",
-    title: "Condicao simples",
-    topic: "Codigo",
+    title: "Condição simples",
+    topic: "Código",
     difficulty: "iniciante",
     estimatedMinutes: 12,
-    question: "Complete uma funcao curta que classifica uma taxa de acerto.",
-    prompt: "Escreva JavaScript para retornar 'avancar' quando accuracy for maior que 80; caso contrario, retorne 'praticar'.",
-    starterCode: "function recomendar(accuracy) {\n  // seu codigo aqui\n}",
-    expectedKeywords: ["function recomendar", "accuracy", "if", "> 80", "return", "avancar", "praticar"],
+    question: "Complete uma função curta que classifica uma taxa de acerto.",
+    prompt: "Escreva JavaScript para retornar 'avançar' quando accuracy for maior que 80; caso contrário, retorne 'praticar'.",
+    starterCode: "function recomendar(accuracy) {\n  // seu código aqui\n}",
+    expectedKeywords: ["function recomendar", "accuracy", "if", "> 80", "return", "avançar", "praticar"],
     forbiddenKeywords: ["alert(", "prompt("],
-    sampleAnswer: "function recomendar(accuracy) {\n  if (accuracy > 80) {\n    return 'avancar';\n  }\n  return 'praticar';\n}"
+    sampleAnswer: "function recomendar(accuracy) {\n  if (accuracy > 80) {\n    return 'avançar';\n  }\n  return 'praticar';\n}"
   },
   {
     id: 12,
     type: "code",
     trailId: "programacao",
-    title: "Media de tempos",
-    topic: "Codigo",
+    title: "Média de tempos",
+    topic: "Código",
     difficulty: "intermediario",
     estimatedMinutes: 18,
-    question: "Crie uma funcao para calcular o tempo medio de resposta.",
-    prompt: "Escreva uma funcao mediaTempo que receba um array tempos e retorne 0 se ele estiver vazio; caso contrario, retorne a media usando reduce.",
-    starterCode: "function mediaTempo(tempos) {\n  // seu codigo aqui\n}",
+    question: "Crie uma função para calcular o tempo médio de resposta.",
+    prompt: "Escreva uma função mediaTempo que receba um array tempos e retorne 0 se ele estiver vazio; caso contrário, retorne a média usando reduce.",
+    starterCode: "function mediaTempo(tempos) {\n  // seu código aqui\n}",
     expectedKeywords: ["function mediaTempo", "tempos", "length", "0", "reduce", "return", "/"],
     sampleAnswer: "function mediaTempo(tempos) {\n  if (tempos.length === 0) return 0;\n  const total = tempos.reduce((soma, tempo) => soma + tempo, 0);\n  return total / tempos.length;\n}"
   },
@@ -231,12 +231,12 @@ export const activities: Activity[] = [
     type: "code",
     trailId: "programacao",
     title: "Filtrar erros recentes",
-    topic: "Codigo",
+    topic: "Código",
     difficulty: "intermediario",
     estimatedMinutes: 20,
-    question: "Filtre registros incorretos para apoiar uma recomendacao de revisao.",
-    prompt: "Escreva uma funcao errosRecentes que recebe registros e retorna apenas itens em que correct seja false.",
-    starterCode: "function errosRecentes(registros) {\n  // seu codigo aqui\n}",
+    question: "Filtre registros incorretos para apoiar uma recomendação de revisão.",
+    prompt: "Escreva uma função errosRecentes que recebe registros e retorna apenas itens em que correct seja false.",
+    starterCode: "function errosRecentes(registros) {\n  // seu código aqui\n}",
     expectedKeywords: ["function errosRecentes", "registros", "filter", "correct", "false", "return"],
     sampleAnswer: "function errosRecentes(registros) {\n  return registros.filter((registro) => registro.correct === false);\n}"
   },
@@ -244,15 +244,15 @@ export const activities: Activity[] = [
     id: 14,
     type: "code",
     trailId: "programacao",
-    title: "Decisao adaptativa completa",
-    topic: "Codigo",
+    title: "Decisão adaptativa completa",
+    topic: "Código",
     difficulty: "avancado",
     estimatedMinutes: 28,
-    question: "Implemente uma decisao adaptativa com duas regras.",
-    prompt: "Escreva uma funcao decidir(accuracy, averageTime) que retorne 'avancar' se accuracy > 80, 'revisar' se accuracy < 50 ou averageTime > 45, e 'praticar' nos demais casos.",
-    starterCode: "function decidir(accuracy, averageTime) {\n  // seu codigo aqui\n}",
-    expectedKeywords: ["function decidir", "accuracy", "averageTime", "> 80", "< 50", "> 45", "return", "avancar", "revisar", "praticar"],
-    sampleAnswer: "function decidir(accuracy, averageTime) {\n  if (accuracy > 80) return 'avancar';\n  if (accuracy < 50 || averageTime > 45) return 'revisar';\n  return 'praticar';\n}"
+    question: "Implemente uma decisão adaptativa com duas regras.",
+    prompt: "Escreva uma função decidir(accuracy, averageTime) que retorne 'avançar' se accuracy > 80, 'revisar' se accuracy < 50 ou averageTime > 45, e 'praticar' nos demais casos.",
+    starterCode: "function decidir(accuracy, averageTime) {\n  // seu código aqui\n}",
+    expectedKeywords: ["function decidir", "accuracy", "averageTime", "> 80", "< 50", "> 45", "return", "avançar", "revisar", "praticar"],
+    sampleAnswer: "function decidir(accuracy, averageTime) {\n  if (accuracy > 80) return 'avançar';\n  if (accuracy < 50 || averageTime > 45) return 'revisar';\n  return 'praticar';\n}"
   },
 
   {
@@ -260,26 +260,26 @@ export const activities: Activity[] = [
     type: "quiz",
     trailId: "dados",
     title: "Ajuste de dificuldade",
-    topic: "Recomendacao",
+    topic: "Recomendação",
     difficulty: "intermediario",
     estimatedMinutes: 12,
     question: "Se a taxa de acertos passa de 80%, o sistema deve:",
-    options: ["Aumentar a dificuldade", "Apagar o historico", "Encerrar a trilha"],
+    options: ["Aumentar a dificuldade", "Apagar o histórico", "Encerrar a trilha"],
     correctOption: 0
   },
   {
     id: 16,
     type: "quiz",
     trailId: "dados",
-    title: "Tempo medio alto",
-    topic: "Analise de desempenho",
+    title: "Tempo médio alto",
+    topic: "Análise de desempenho",
     difficulty: "intermediario",
     estimatedMinutes: 14,
-    question: "Por que tempo medio alto pode gerar recomendacao de revisao mesmo com alguns acertos?",
+    question: "Por que tempo médio alto pode gerar recomendação de revisão mesmo com alguns acertos?",
     options: [
-      "Porque pode indicar esforco excessivo ou inseguranca no conteudo",
+      "Porque pode indicar esforço excessivo ou insegurança no conteúdo",
       "Porque tempo alto sempre significa cola",
-      "Porque o tempo nao tem relacao com aprendizagem"
+      "Porque o tempo não tem relação com aprendizagem"
     ],
     correctOption: 0
   },
@@ -291,11 +291,11 @@ export const activities: Activity[] = [
     topic: "Dados",
     difficulty: "avancado",
     estimatedMinutes: 18,
-    question: "Por que usar apenas registros recentes pode ser melhor do que usar todo o historico?",
+    question: "Por que usar apenas registros recentes pode ser melhor do que usar todo o histórico?",
     options: [
       "Porque reflete melhor o estado atual do aluno",
-      "Porque elimina a necessidade de validacao",
-      "Porque impede qualquer mudanca de nivel"
+      "Porque elimina a necessidade de validação",
+      "Porque impede qualquer mudança de nível"
     ],
     correctOption: 0
   },
@@ -304,12 +304,12 @@ export const activities: Activity[] = [
     type: "code",
     trailId: "dados",
     title: "Taxa de acerto",
-    topic: "Codigo e dados",
+    topic: "Código e dados",
     difficulty: "avancado",
     estimatedMinutes: 24,
-    question: "Calcule uma metrica essencial para a recomendacao.",
-    prompt: "Escreva uma funcao taxaAcerto que receba registros, conte os itens com correct true e retorne a porcentagem arredondada.",
-    starterCode: "function taxaAcerto(registros) {\n  // seu codigo aqui\n}",
+    question: "Calcule uma métrica essencial para a recomendação.",
+    prompt: "Escreva uma função taxaAcerto que receba registros, conte os itens com correct true e retorne a porcentagem arredondada.",
+    starterCode: "function taxaAcerto(registros) {\n  // seu código aqui\n}",
     expectedKeywords: ["function taxaAcerto", "registros", "filter", "correct", "length", "Math.round", "* 100", "return"],
     sampleAnswer: "function taxaAcerto(registros) {\n  if (registros.length === 0) return 0;\n  const acertos = registros.filter((registro) => registro.correct).length;\n  return Math.round((acertos / registros.length) * 100);\n}"
   },
@@ -322,7 +322,7 @@ export const activities: Activity[] = [
     topic: "Larga escala",
     difficulty: "intermediario",
     estimatedMinutes: 14,
-    question: "Qual desafio cresce quando ha muitos usuarios simultaneos?",
+    question: "Qual desafio cresce quando há muitos usuários simultâneos?",
     options: [
       "Processar um grande volume de dados com rapidez",
       "Falta de acesso a internet em todos os dispositivos",
@@ -335,14 +335,14 @@ export const activities: Activity[] = [
     type: "quiz",
     trailId: "escala",
     title: "Cold start",
-    topic: "Personalizacao",
+    topic: "Personalização",
     difficulty: "avancado",
     estimatedMinutes: 16,
-    question: "O que o sistema deve fazer para um aluno sem historico?",
+    question: "O que o sistema deve fazer para um aluno sem histórico?",
     options: [
-      "Iniciar com conteudo padrao e adaptar nas primeiras interacoes",
-      "Bloquear recomendacoes permanentemente",
-      "Levar o aluno diretamente ao conteudo mais dificil"
+      "Iniciar com conteúdo padrão e adaptar nas primeiras interações",
+      "Bloquear recomendações permanentemente",
+      "Levar o aluno diretamente ao conteúdo mais difícil"
     ],
     correctOption: 0
   },
@@ -350,15 +350,15 @@ export const activities: Activity[] = [
     id: 21,
     type: "quiz",
     trailId: "escala",
-    title: "Seguranca de dados",
+    title: "Segurança de dados",
     topic: "Infraestrutura",
     difficulty: "avancado",
     estimatedMinutes: 14,
-    question: "Por que e importante proteger os dados de desempenho do usuario?",
+    question: "Por que é importante proteger os dados de desempenho do usuário?",
     options: [
-      "Para garantir privacidade e evitar uso indevido de informacoes pessoais",
+      "Para garantir privacidade e evitar uso indevido de informações pessoais",
       "Para reduzir o tamanho do banco de dados",
-      "Para impedir que o usuario acesse a propria trilha"
+      "Para impedir que o usuário acesse a própria trilha"
     ],
     correctOption: 0
   },
@@ -366,15 +366,15 @@ export const activities: Activity[] = [
     id: 22,
     type: "quiz",
     trailId: "escala",
-    title: "Multi-instituicao",
+    title: "Multi-instituição",
     topic: "SaaS",
     difficulty: "avancado",
     estimatedMinutes: 20,
-    question: "Em um SaaS educacional, qual cuidado e essencial ao atender varias instituicoes?",
+    question: "Em um SaaS educacional, qual cuidado é essencial ao atender várias instituições?",
     options: [
-      "Separar dados e permissoes por instituicao",
-      "Usar a mesma senha para todos os usuarios",
-      "Misturar relatorios de turmas diferentes"
+      "Separar dados e permissões por instituição",
+      "Usar a mesma senha para todos os usuários",
+      "Misturar relatórios de turmas diferentes"
     ],
     correctOption: 0
   }
