@@ -505,8 +505,9 @@ input:focus-visible {
   align-items: center;
   background: linear-gradient(135deg, var(--primary), var(--primary-strong));
   border-radius: var(--radius-sm);
-  color: #ffffff;
+  color: #ffffff !important;
   display: grid;
+  font-size: 0.95rem;
   font-weight: 900;
   height: 46px;
   justify-content: center;
@@ -566,7 +567,7 @@ input:focus-visible {
 
 :root[data-theme="brutal"] .brand-mark {
   border: 3px solid #ffffff;
-  color: #111111;
+  color: #ffffff !important;
 }
 
 .brand strong,
