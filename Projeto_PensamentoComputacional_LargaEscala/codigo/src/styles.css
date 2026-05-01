@@ -522,6 +522,13 @@ input:focus-visible {
     overflow: hidden;
   }
 
+.brand-mark svg {
+  display: block;
+  flex: 0 0 auto;
+  height: 68%;
+  width: 68%;
+}
+
 .brand-mark::before {
     content: "";
     pointer-events: none;
@@ -1733,6 +1740,11 @@ h3 {
     padding: 0;
     position: relative;
     overflow: hidden;
+  }
+
+  .brand-mark svg {
+    height: 66%;
+    width: 66%;
   }
 
   .brand-mark::before {
