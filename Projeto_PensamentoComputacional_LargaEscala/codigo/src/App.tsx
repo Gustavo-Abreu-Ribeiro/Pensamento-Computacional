@@ -71,6 +71,11 @@ const themes = [
     id: "editorial",
     name: "Editorial",
     swatches: ["#1f1a17", "#b3261e", "#f7f0df"]
+  },
+  {
+    id: "aurora",
+    name: "Aurora Glass",
+    swatches: ["#0f172a", "#67e8f9", "#f0abfc"]
   }
 ] as const;
 
@@ -99,6 +104,33 @@ function formatTimer(seconds: number) {
   return `${minutes}:${remainingSeconds}`;
 }
 
+function isCodeActivity(activity: Activity) {
+  return activity.type === "code";
+}
+
+function normalizeCodeSnippet(value: string) {
+  return value.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function assessCodeActivity(activity: Activity, answer: string) {
+  if (!isCodeActivity(activity)) {
+    return { blocked: [] as string[], matched: [] as string[], missing: [] as string[], score: 0 };
+  }
+
+  const normalizedAnswer = normalizeCodeSnippet(answer);
+  const matched = activity.expectedKeywords.filter((keyword) =>
+    normalizedAnswer.includes(normalizeCodeSnippet(keyword))
+  );
+  const missing = activity.expectedKeywords.filter((keyword) => !matched.includes(keyword));
+  const blocked = (activity.forbiddenKeywords ?? []).filter((keyword) =>
+    normalizedAnswer.includes(normalizeCodeSnippet(keyword))
+  );
+  const keywordScore = Math.round((matched.length / activity.expectedKeywords.length) * 100);
+  const score = blocked.length > 0 ? Math.min(keywordScore, 45) : keywordScore;
+
+  return { blocked, matched, missing, score };
+}
+
 function getTrailProgress(trail: LearningTrail, records: PerformanceRecord[]) {
   const total = activities.filter((activity) => activity.trailId === trail.id).length;
   const completed = new Set(
@@ -114,6 +146,7 @@ function getTrailProgress(trail: LearningTrail, records: PerformanceRecord[]) {
 export default function App() {
   const { user } = useUser();
   const [route, setRoute] = useState<Route>("inicio");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<ThemeId>(() => {
     const savedTheme = window.localStorage.getItem("studyflow-theme");
     return themes.some((item) => item.id === savedTheme) ? (savedTheme as ThemeId) : "default";
@@ -132,6 +165,7 @@ export default function App() {
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [activityStarted, setActivityStarted] = useState(false);
+  const [codeAnswer, setCodeAnswer] = useState("");
 
   const selectedTrail = trails.find((trail) => trail.id === selectedTrailId) ?? trails[0];
   const trailActivities = activities.filter((activity) => activity.trailId === selectedTrail.id);
@@ -143,6 +177,10 @@ export default function App() {
   const currentActivity = useMemo(
     () => findNextActivity(trailRecords, recommendation.nextDifficulty, trailActivities),
     [recommendation.nextDifficulty, trailActivities, trailRecords]
+  );
+  const codeAssessment = useMemo(
+    () => assessCodeActivity(currentActivity, codeAnswer),
+    [codeAnswer, currentActivity]
   );
   const accuracy = calculateAccuracy(records);
   const trailAccuracy = calculateAccuracy(trailRecords);
@@ -175,22 +213,26 @@ export default function App() {
     setStartedAt(null);
     setElapsedSeconds(0);
     setSelectedOption(null);
+    setCodeAnswer(isCodeActivity(currentActivity) ? currentActivity.starterCode : "");
   }, [currentActivity.id]);
 
   function startActivity() {
     setActivityStarted(true);
     setSelectedOption(null);
+    setCodeAnswer(isCodeActivity(currentActivity) ? currentActivity.starterCode : "");
     setStartedAt(Date.now());
     setElapsedSeconds(0);
   }
 
   function navigate(nextRoute: Route) {
     setRoute(nextRoute);
+    setIsMobileMenuOpen(false);
   }
 
   function openTrail(trailId: string) {
     setSelectedTrailId(trailId);
     setRoute("atividade");
+    setIsMobileMenuOpen(false);
   }
 
   function logout() {
@@ -198,12 +240,22 @@ export default function App() {
   }
 
   function submitAnswer() {
-    if (selectedOption === null || !activityStarted || startedAt === null) {
+    if (!activityStarted || startedAt === null) {
+      return;
+    }
+
+    if (!isCodeActivity(currentActivity) && selectedOption === null) {
+      return;
+    }
+
+    if (isCodeActivity(currentActivity) && codeAnswer.trim().length < 24) {
       return;
     }
 
     const responseSeconds = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
-    const correct = selectedOption === currentActivity.correctOption;
+    const correct = isCodeActivity(currentActivity)
+      ? codeAssessment.score >= 70 && codeAssessment.blocked.length === 0
+      : selectedOption === currentActivity.correctOption;
     const nextRecords = [
       ...records,
       {
@@ -226,9 +278,11 @@ export default function App() {
       streak: correct ? current.streak + 1 : 0
     }));
     setSelectedOption(null);
+    setCodeAnswer("");
     setActivityStarted(false);
     setStartedAt(null);
     setElapsedSeconds(0);
+    setIsMobileMenuOpen(false);
   }
 
   function resetWorkspace() {
@@ -238,6 +292,7 @@ export default function App() {
     setWorkspace(initialWorkspace);
     setRecords([]);
     setSelectedOption(null);
+    setCodeAnswer("");
     setActivityStarted(false);
     setStartedAt(null);
     setElapsedSeconds(0);
@@ -510,21 +565,58 @@ export default function App() {
 
               <p className="question">{currentActivity.question}</p>
 
-              <div className="options-list">
-                {currentActivity.options.map((option, index) => (
-                  <label className="option-item" key={option}>
-                    <input
-                      checked={selectedOption === index}
-                      name="answer"
-                      onChange={() => setSelectedOption(index)}
-                      type="radio"
-                    />
-                    <span>{option}</span>
-                  </label>
-                ))}
-              </div>
+              {isCodeActivity(currentActivity) ? (
+                <div className="code-challenge">
+                  <p>{currentActivity.prompt}</p>
+                  <textarea
+                    aria-label="Resposta em codigo"
+                    onChange={(event) => setCodeAnswer(event.target.value)}
+                    spellCheck={false}
+                    value={codeAnswer}
+                  />
+                  <div className="code-feedback">
+                    <div>
+                      <span>Cobertura</span>
+                      <strong>{codeAssessment.score}%</strong>
+                    </div>
+                    <p>
+                      {codeAssessment.blocked.length > 0
+                        ? `Evite: ${codeAssessment.blocked.join(", ")}.`
+                        : codeAssessment.missing.length === 0
+                          ? "A resposta cobre todos os pontos esperados."
+                          : `Ainda falta: ${codeAssessment.missing.slice(0, 3).join(", ")}.`}
+                    </p>
+                  </div>
+                  <details className="sample-answer">
+                    <summary>Ver exemplo de solucao</summary>
+                    <pre>{currentActivity.sampleAnswer}</pre>
+                  </details>
+                </div>
+              ) : (
+                <div className="options-list">
+                  {currentActivity.options.map((option, index) => (
+                    <label className="option-item" key={option}>
+                      <input
+                        checked={selectedOption === index}
+                        name="answer"
+                        onChange={() => setSelectedOption(index)}
+                        type="radio"
+                      />
+                      <span>{option}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
 
-              <button className="primary-button" disabled={selectedOption === null} onClick={submitAnswer}>
+              <button
+                className="primary-button"
+                disabled={
+                  isCodeActivity(currentActivity)
+                    ? codeAnswer.trim().length < 24
+                    : selectedOption === null
+                }
+                onClick={submitAnswer}
+              >
                 Enviar resposta
               </button>
             </>
@@ -647,39 +739,55 @@ export default function App() {
       </SignedOut>
       <SignedIn>
         <main className="app-shell">
-          <aside className="sidebar">
-            <div className="brand">
-              <span className="brand-mark">SF</span>
-              <div>
-                <strong>StudyFlow</strong>
-                <span>SaaS adaptativo</span>
+          <aside className={isMobileMenuOpen ? "sidebar open" : "sidebar"}>
+            <div className="sidebar-header">
+              <div className="brand">
+                <span className="brand-mark">SF</span>
+                <div>
+                  <strong>StudyFlow</strong>
+                  <span>SaaS adaptativo</span>
+                </div>
               </div>
+
+              <button
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+                className="menu-toggle"
+                onClick={() => setIsMobileMenuOpen((current) => !current)}
+                type="button"
+              >
+                <span />
+                <span />
+                <span />
+              </button>
             </div>
 
-            <nav className="nav-list" aria-label="Páginas do sistema">
-              {(Object.keys(routeLabels) as Route[]).map((item) => (
-                <button
-                  className={route === item ? "active" : ""}
-                  key={item}
-                  onClick={() => navigate(item)}
-                  type="button"
-                >
-                  {routeLabels[item]}
-                </button>
-              ))}
-            </nav>
+            <div className="sidebar-panel">
+              <nav className="nav-list" aria-label="Páginas do sistema">
+                {(Object.keys(routeLabels) as Route[]).map((item) => (
+                  <button
+                    className={route === item ? "active" : ""}
+                    key={item}
+                    onClick={() => navigate(item)}
+                    type="button"
+                  >
+                    {routeLabels[item]}
+                  </button>
+                ))}
+              </nav>
 
-            <div className="tenant-card">
-              <span>Workspace</span>
-              <strong>{workspace.institution}</strong>
-              <small>{workspace.className}</small>
-            </div>
+              <div className="tenant-card">
+                <span>Workspace</span>
+                <strong>{workspace.institution}</strong>
+                <small>{workspace.className}</small>
+              </div>
 
-            <div className="user-card">
-              <span>Usuário autenticado</span>
-              <strong>{user?.firstName || user?.username || "Usuário"}</strong>
-              <small>Clerk SSO</small>
-              <UserButton />
+              <div className="user-card">
+                <span>Usuário autenticado</span>
+                <strong>{user?.firstName || user?.username || "Usuário"}</strong>
+                <small>Clerk SSO</small>
+                <UserButton />
+              </div>
             </div>
           </aside>
 

@@ -1,95 +1,113 @@
-# Design do Sistema – StudyFlow
+# Design do Sistema - StudyFlow
 
-## Visão Geral
+## Visao Geral
 
-O StudyFlow é um sistema de aprendizado adaptativo que ajusta o conteúdo apresentado ao usuário com base em seu desempenho. O design do sistema foi estruturado com foco em modularidade, clareza e possibilidade de expansão para cenários de larga escala.
+O StudyFlow e um SaaS educacional de aprendizagem adaptativa. A aplicacao atual esta publicada em:
 
----
+[https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
-## Decomposição do Sistema
+O design foi estruturado para demonstrar como um sistema de larga escala pode ser decomposto em modulos menores, com separacao clara entre autenticacao, trilhas, atividades, registros de desempenho, recomendacao e visualizacao de progresso.
 
-O sistema foi dividido em módulos com responsabilidades bem definidas.
+## Modulos Principais
 
-### Autenticação
+### Autenticacao
 
-Responsável pelo cadastro e login de usuários. Garante controle de acesso ao sistema.
+O acesso ao sistema e protegido por Clerk. O usuario precisa autenticar antes de visualizar a area interna do StudyFlow.
+
+### Workspace Institucional
+
+Representa o contexto da instituicao, curso ou turma. Na versao atual, a instituicao padrao e UDF, e as informacoes podem ser ajustadas na propria sessao.
 
 ### Perfil do Aluno
 
-Armazena informações básicas do usuário e seu nível atual de aprendizado.
+Mantem nome, nivel atual e sequencia de acertos. O nivel pode ser `iniciante`, `intermediario` ou `avancado`.
+
+### Trilhas de Aprendizagem
+
+O sistema possui cinco trilhas:
+
+- Logica e algoritmos.
+- Padroes e abstracao.
+- Programacao pratica.
+- Dados e recomendacao.
+- Sistemas de larga escala.
+
+Cada trilha agrupa atividades por objetivo educacional e permite acompanhar progresso.
+
+### Ambiente de Atividade
+
+O aluno escolhe uma trilha e abre uma atividade sugerida. O cronometro so comeca quando o aluno clica em iniciar, evitando contagem automatica apenas por abrir a pagina.
+
+As atividades podem ser de multipla escolha ou de codigo curto. Nos desafios de codigo, o aluno escreve uma resposta em JavaScript e o app calcula uma porcentagem de cobertura com base em estruturas esperadas, palavras-chave e termos proibidos.
 
 ### Registro de Desempenho
 
-Responsável por armazenar dados gerados durante o uso:
+Cada resposta gera um registro com:
 
-- respostas corretas e incorretas  
-- tempo de resposta  
-- histórico de atividades  
+- atividade;
+- trilha;
+- conteudo;
+- resultado;
+- tempo de resposta;
+- dificuldade.
 
-### Sistema de Recomendação
+Na versao atual, esses dados ficam em `localStorage`.
 
-Utiliza os dados do desempenho para determinar qual conteúdo deve ser apresentado em seguida.
+### Recomendacao Adaptativa
 
-### Relatórios
+O modulo `codigo/src/recommendation.ts` calcula taxa de acerto e tempo medio para recomendar uma das acoes:
 
-Apresenta ao usuário informações sobre progresso, evolução e desempenho ao longo do tempo.
+- avancar;
+- revisar;
+- praticar.
 
----
+### Painel e Historico
+
+O painel mostra metricas gerais e da trilha ativa. O historico lista os registros de respostas da sessao.
+
+### Configuracoes Visuais
+
+A pagina de configuracoes permite alternar entre nove temas, incluindo temas que mudam apenas a paleta e temas que tambem alteram forma e linguagem visual, como Neo brutalism, Editorial e Aurora Glass.
 
 ## Fluxo de Funcionamento
 
-1. O usuário realiza login no sistema  
-2. O usuário responde uma atividade  
-3. O sistema registra o desempenho  
-4. O sistema de recomendação processa os dados  
-5. O sistema define o próximo conteúdo  
-6. O processo se repete continuamente  
+1. O usuario acessa o deploy ou a versao local.
+2. O usuario autentica pelo Clerk.
+3. O sistema abre o workspace StudyFlow.
+4. O aluno escolhe uma trilha.
+5. O sistema sugere uma atividade conforme o desempenho recente.
+6. O aluno clica em iniciar atividade.
+7. O cronometro comeca.
+8. O aluno responde a questao.
+9. O sistema registra desempenho e tempo.
+10. O algoritmo calcula a recomendacao.
+11. O painel e o historico sao atualizados.
+12. O sistema define a proxima atividade.
 
----
+## Algoritmo de Recomendacao
 
-## Reconhecimento de Padrões
+As regras atuais sao:
 
-O sistema identifica padrões nos dados coletados:
+- Sem historico: praticar no nivel atual.
+- Taxa de acerto acima de 80%: avancar a dificuldade.
+- Taxa de acerto abaixo de 50%: revisar.
+- Tempo medio acima de 45 segundos: revisar.
+- Caso contrario: continuar praticando.
 
-- frequência de erros por conteúdo  
-- tempo médio de resposta  
-- evolução do desempenho  
+Esse algoritmo tem baixo custo computacional e e adequado para demonstrar a logica antes de evoluir para modelos mais complexos.
 
-Esses padrões são utilizados para ajustar a dificuldade das atividades.
+## Escalabilidade e Evolucao
 
----
+A versao atual demonstra o fluxo do produto. Para uma versao completa em producao, os proximos passos seriam:
 
-## Abstração
+- Persistir desempenho em banco de dados.
+- Associar registros ao usuario autenticado no Clerk.
+- Criar perfis de professor e administrador.
+- Gerar relatorios por turma e instituicao.
+- Processar recomendacoes em lote ou em servicos separados conforme o volume de uso.
+- Adicionar observabilidade, auditoria e politicas de seguranca para dados educacionais.
 
-O sistema foi modelado com base em quatro entidades principais:
+## Diagramas
 
-Aluno: representa o usuário do sistema  
-Conteúdo: representa as atividades disponíveis  
-Desempenho: representa o resultado das interações  
-Recomendação: representa a decisão sobre o próximo conteúdo  
-
-Essa modelagem simplifica a representação do sistema e facilita a implementação.
-
----
-
-## Algoritmo de Recomendação
-
-O algoritmo utiliza regras simples baseadas em desempenho:
-
-- Se a taxa de acertos for maior que 80 por cento, o nível de dificuldade é aumentado  
-- Se a taxa de erros for maior que 50 por cento, o nível de dificuldade é reduzido  
-- Se o tempo médio de resposta for elevado, o sistema sugere revisão  
-
-O algoritmo pode ser implementado com baixo custo computacional e permite execução rápida.
-
----
-
-## Considerações de Escalabilidade
-
-O sistema foi projetado considerando crescimento futuro:
-
-- grande volume de dados por usuário  
-- necessidade de processamento frequente  
-- múltiplos acessos simultâneos  
-
-A separação em módulos permite futura distribuição em serviços independentes.
+- `Diagrama.png`: visao modular atualizada.
+- `Aula_Abstracoes_PensamentoComputacional/fluxograma.png`: fluxo da recomendacao adaptativa.

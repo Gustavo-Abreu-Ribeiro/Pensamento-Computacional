@@ -1,165 +1,103 @@
-# Projeto – Pensamento Computacional para Sistemas de Larga Escala
+# Projeto - Pensamento Computacional para Sistemas de Larga Escala
 
-## Descrição
+## Descricao
 
-Este projeto foi desenvolvido como parte da disciplina Pensamento Computacional no curso de Ciência da Computação, com a Profa. Kadidja Valéria.
+Este projeto foi desenvolvido para a disciplina Pensamento Computacional, no curso de Ciencia da Computacao da UDF.
 
-O objetivo é aplicar os conceitos de pensamento computacional e engenharia de software na concepção de um sistema de larga escala, explorando decomposição, abstração, reconhecimento de padrões e algoritmos.
-
----
-
-## Objetivos
-
-- Relacionar engenharia de software e pensamento computacional  
-- Reconhecer princípios e padrões relevantes para sistemas de larga escala  
-- Identificar dificuldades reais no desenvolvimento de aplicações complexas  
-- Aplicar metodologias ágeis no planejamento do projeto  
-
----
+O objetivo e aplicar conceitos de pensamento computacional e engenharia de software na concepcao de um sistema educacional com caracteristicas de larga escala, explorando decomposicao, abstracao, reconhecimento de padroes, algoritmos, autenticacao, experiencia de usuario e publicacao web.
 
 ## Sistema Proposto
 
-Nome do Sistema: StudyFlow – Plataforma de Aprendizagem Adaptativa
+**Nome do sistema:** StudyFlow - Plataforma de Aprendizagem Adaptativa
 
-### Descrição
+O StudyFlow e um SaaS educacional que organiza trilhas de aprendizagem e adapta a proxima atividade conforme o desempenho recente do aluno. A versao atual esta publicada na Vercel:
 
-Uma aplicação web para aprendizado personalizado que cria trilhas de estudo dinâmicas com base no comportamento do aluno.
+[https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
-O sistema integra:
+## Implementacao Atual
 
-- Cadastro e autenticação de usuários  
-- Registro de desempenho, incluindo acertos, erros e tempo de resposta  
-- Sistema de recomendações adaptativas  
-- Painel de acompanhamento de progresso  
-
-### Diferencial
-
-O sistema se diferencia por utilizar múltiplos fatores para adaptação do aprendizado:
-
-- Consideração do tempo de resposta além de acertos e erros  
-- Ajuste dinâmico da dificuldade em tempo de execução  
-- Uso de padrões de comportamento para orientar recomendações  
-
-Essa abordagem permite uma adaptação mais precisa e contínua do conteúdo apresentado ao usuário.
-
-### Caracterização como Sistema de Larga Escala
-
-O sistema foi concebido considerando:
-
-- Grande número de usuários simultâneos  
-- Alto volume de dados gerados continuamente  
-- Necessidade de processamento frequente de recomendações  
-- Personalização individual para cada usuário  
-
-Essas características tornam o problema computacionalmente relevante e exigem soluções eficientes e escaláveis.
-
-### Caracterização como SaaS
-
-O StudyFlow também pode ser entendido como um SaaS educacional, pois seria oferecido como uma aplicação acessada pela internet, sem necessidade de instalação local pelos usuários finais.
-
-Nesse modelo, escolas, professores e alunos poderiam utilizar a plataforma por meio de contas cadastradas, com dados armazenados em nuvem e recursos disponibilizados de forma contínua.
-
-Como SaaS, o sistema poderia incluir:
-
-- Acesso via navegador  
-- Cadastro de instituições, professores e alunos  
-- Planos de assinatura ou contratação institucional  
-- Armazenamento seguro dos dados educacionais em nuvem  
-- Painel administrativo para acompanhamento de turmas  
-- Relatórios de desempenho por aluno, turma ou instituição  
-- Escalabilidade para atender múltiplas instituições simultaneamente  
-
-Essa abordagem reforça a proposta de larga escala, pois permite que o mesmo sistema seja utilizado por diferentes grupos de usuários, mantendo personalização, disponibilidade e evolução contínua da plataforma.
-
----
-
-## Pensamento Computacional Aplicado
-
-### Decomposição
-
-- Autenticação  
-- Perfil do aluno  
-- Registro de desempenho  
-- Sistema de recomendação  
-- Relatórios  
-
-### Reconhecimento de Padrões
-
-- Identificação de erros recorrentes  
-- Análise de tempo de resposta  
-- Identificação de dificuldades por conteúdo  
-
-### Abstração
-
-O sistema foi modelado com base nas seguintes entidades principais:
-
-- Aluno  
-- Conteúdo  
-- Desempenho  
-- Recomendação  
-
-### Algoritmos
-
-O sistema utiliza regras para adaptação do conteúdo:
-
-Se o aluno apresenta alto índice de acertos, o nível de dificuldade é aumentado.  
-Se o aluno apresenta alto índice de erros, o nível de dificuldade é reduzido.  
-Se o tempo de resposta é elevado, o sistema sugere revisão do conteúdo.
-
----
-
-## Metodologia de Desenvolvimento
-
-Metodologia: Scrum  
-
-- Sprints de duas semanas  
-- Uso de GitHub Projects, Issues e quadro Kanban  
-
----
-
-## Implementação Atual
-
-Foi desenvolvida uma versão web funcional do StudyFlow com React, TypeScript, Vite e estrutura preparada para Tauri.
-
-A aplicação atual apresenta uma interface moderna de SaaS educacional, com painel de acompanhamento, configuração de aluno, instituição e turma, registro de respostas e recomendação adaptativa.
+A aplicacao foi implementada com React, TypeScript, Vite, Clerk e estrutura preparada para Tauri. O app funciona como uma demonstracao navegavel do SaaS, com autenticacao real via Clerk e dados de estudo mantidos localmente na sessao do navegador.
 
 Recursos implementados:
 
-- Tela de login antes do acesso ao sistema  
-- Simulação de autenticação por e-mail e SSO institucional, Google Workspace e Microsoft Entra ID  
-- Menu inicial com navegação entre páginas internas do sistema  
-- Catálogo de trilhas de aprendizagem por objetivo educacional  
-- Página específica de painel para acompanhamento do aluno e da turma  
-- Página de hospedagem com checklist para publicação real do SaaS  
-- Página de configurações com sete temas visuais selecionáveis  
-- Dashboard com métricas de nível, taxa de acerto, tempo médio e alunos ativos  
-- Cadastro simples de aluno, instituição e turma dentro da sessão  
-- Ambiente de atividade com início manual da questão, evitando cronômetro automático ao abrir a aba  
-- Atividades com alternativas, correção automática e cronômetro real  
-- Histórico de desempenho por trilha, conteúdo, resultado, tempo e dificuldade  
-- Algoritmo de recomendação baseado em acertos, erros e tempo médio  
-- Footer com créditos do autor, instituição, curso e disciplina  
-- Interface visual mais moderna, limpa e profissional para representar um SaaS educacional  
+- Login protegido por Clerk, com suporte aos provedores configurados na conta.
+- Layout de SaaS educacional com sidebar, paginas internas e footer discreto no fim da pagina.
+- Rotas internas: Inicio, Trilhas, Painel, Atividade, Historico e Configuracoes.
+- Catalogo com cinco trilhas: Logica e algoritmos, Padroes e abstracao, Programacao pratica, Dados e recomendacao, Sistemas de larga escala.
+- Ambiente de atividade com inicio manual, cronometro real apos o clique em iniciar e correcao automatica.
+- Atividades de multipla escolha e desafios curtos de codigo com avaliacao automatica por cobertura de requisitos.
+- Registro de desempenho por trilha, conteudo, resultado, tempo de resposta e dificuldade.
+- Painel com nivel atual, taxa de acerto, tempo medio, trilhas completas e recomendacao pedagogica.
+- Algoritmo de recomendacao baseado em taxa de acerto, erros recentes e tempo medio.
+- Personalizacao de aluno, instituicao e turma dentro da sessao.
+- Nove temas visuais: Moderno, Escuro, Pastel, Terroso, Vibrante, Cores fortes, Neo brutalism, Editorial e Aurora Glass.
+- Identidade institucional atualizada para UDF.
+- Build de producao gerado em `codigo/dist`.
 
-Temas disponíveis:
+## Pensamento Computacional Aplicado
 
-- Moderno  
-- Escuro  
-- Pastel  
-- Terroso  
-- Vibrante  
-- Cores fortes  
-- Neo brutalism  
+### Decomposicao
 
-### Acesso ao SaaS
+O sistema foi dividido em partes menores:
 
-Com o servidor de desenvolvimento em execução, o app pode ser acessado pelo navegador no endereço:
+- Autenticacao e controle de acesso.
+- Perfil do aluno e configuracao da turma.
+- Trilhas e atividades.
+- Registro de desempenho.
+- Algoritmo de recomendacao.
+- Painel, historico e temas visuais.
+- Deploy web.
 
-[http://127.0.0.1:1420/](http://127.0.0.1:1420/)
+### Reconhecimento de Padroes
 
-Caso o Vite utilize outra porta, o endereço correto aparecerá no terminal após executar `npm run dev` dentro da pasta `codigo`.
+O StudyFlow observa padroes nos registros recentes:
 
-### Rodar como aplicação web
+- Frequencia de acertos e erros.
+- Tempo medio de resposta.
+- Dificuldades por conteudo e trilha.
+- Evolucao do nivel do aluno.
+
+### Abstracao
+
+Os detalhes da interface sao reduzidos a entidades principais:
+
+- Aluno.
+- Trilha.
+- Atividade.
+- Resposta de codigo.
+- Registro de desempenho.
+- Recomendacao.
+- Workspace institucional.
+
+### Algoritmos
+
+O algoritmo `recommendNextStep`, em `codigo/src/recommendation.ts`, usa regras simples:
+
+- Se a taxa de acerto for maior que 80%, recomenda avancar.
+- Se a taxa de acerto for menor que 50%, recomenda revisar.
+- Se o tempo medio for maior que 45 segundos, recomenda revisar.
+- Nos demais casos, recomenda continuar praticando.
+
+## Caracterizacao como Sistema de Larga Escala
+
+O projeto foi concebido para representar problemas comuns de sistemas educacionais de maior porte:
+
+- Muitos alunos e instituicoes usando a mesma plataforma.
+- Grande volume de eventos de aprendizagem.
+- Necessidade de recomendacoes frequentes.
+- Personalizacao por aluno, turma e trilha.
+- Autenticacao segura e possibilidade de integracao com provedores externos.
+- Evolucao futura para persistencia em banco de dados e relatorios institucionais.
+
+Na versao atual, os dados pedagogicos ficam no navegador. Em uma versao de producao completa, eles seriam persistidos em banco de dados e associados ao usuario autenticado.
+
+## Acesso ao SaaS
+
+Versao publicada:
+
+[https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
+
+Versao local:
 
 ```bash
 cd codigo
@@ -167,7 +105,11 @@ npm install
 npm run dev
 ```
 
-### Gerar versão de produção
+O Vite informara a porta local no terminal. Neste ambiente, a aplicacao costuma abrir em:
+
+[http://127.0.0.1:1420/](http://127.0.0.1:1420/)
+
+## Gerar Build de Producao
 
 ```bash
 cd codigo
@@ -177,11 +119,9 @@ npm run build
 
 O build final fica em `codigo/dist`.
 
-Orientações de hospedagem estão disponíveis em `codigo/DEPLOY.md`.
+## Rodar como Aplicacao Desktop com Tauri
 
-### Rodar como aplicação desktop com Tauri
-
-Para usar o Tauri, é necessário ter Node.js, npm e Rust instalados.
+Para usar o Tauri, e necessario ter Node.js, npm e Rust instalados.
 
 ```bash
 cd codigo
@@ -189,27 +129,18 @@ npm install
 npm run tauri dev
 ```
 
-### Estrutura criada
+## Estrutura do Projeto
 
-- `README.md`: documentação principal do projeto
-- `Design.md`: descrição da arquitetura e módulos do sistema
-- `Desafios.md`: desafios técnicos e de larga escala
-- `Diagrama.png`: diagrama do sistema
-- `Aula_Abstracoes_PensamentoComputacional`: atividade específica da aula de abstrações
-- `codigo`: aplicação web/desktop e arquivos necessários para execução
-- `codigo/DEPLOY.md`: orientações para publicar a aplicação em hospedagem real
-- `codigo/src`: interface, dados de exemplo, cronômetro real e algoritmo de recomendação
-- `codigo/src-tauri`: configuração inicial para gerar app desktop
-- `codigo/package.json`: scripts e dependências do projeto
+- `README.md`: documentacao principal.
+- `Design.md`: arquitetura, modulos e fluxo do sistema.
+- `Desafios.md`: desafios tecnicos e de larga escala.
+- `Diagrama.png`: diagrama atualizado dos modulos principais.
+- `Aula_Abstracoes_PensamentoComputacional`: atividade de abstracao, fluxograma e pseudocodigo.
+- `codigo`: aplicacao web/desktop.
+- `codigo/src`: interface, dados de exemplo, cronometro e algoritmo de recomendacao.
+- `codigo/src-tauri`: configuracao inicial para gerar app desktop.
+- `codigo/DEPLOY.md`: orientacoes de publicacao e manutencao do deploy.
 
----
+## Documentos e Fluxos
 
-## Desafios Identificados
-
-- Escalabilidade para múltiplos usuários simultâneos  
-- Processamento contínuo de dados  
-- Geração de recomendações em tempo hábil  
-- Segurança de dados educacionais  
-- Integração com sistemas externos  
-
----
+O arquivo `Diagrama.png` resume a arquitetura modular atual do StudyFlow. O arquivo `Aula_Abstracoes_PensamentoComputacional/fluxograma.png` representa o fluxo da recomendacao adaptativa, incluindo a etapa atual em que o aluno precisa iniciar manualmente a atividade para que o cronometro comece.

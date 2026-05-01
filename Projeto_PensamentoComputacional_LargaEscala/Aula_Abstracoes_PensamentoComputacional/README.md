@@ -1,70 +1,65 @@
-# Aula - Abstrações em Pensamento Computacional
+# Aula - Abstracoes em Pensamento Computacional
 
-Esta pasta reúne os arquivos referentes à atividade da aula de abstração em Pensamento Computacional, aplicada ao sistema proposto no projeto principal: **StudyFlow - Plataforma de Aprendizagem Adaptativa**.
+Esta pasta reune os arquivos referentes a atividade da aula de abstracao em Pensamento Computacional, aplicada ao sistema **StudyFlow - Plataforma de Aprendizagem Adaptativa**.
 
-O objetivo da atividade é representar uma parte do sistema usando abstração, fluxo lógico e pseudocódigo, demonstrando como o pensamento computacional ajuda a transformar um problema real em uma solução organizada.
+O objetivo e representar uma parte do sistema usando abstracao, fluxo logico e pseudocodigo, demonstrando como o pensamento computacional ajuda a transformar um problema real em uma solucao organizada.
 
----
+## Sistema Utilizado
 
-## Sistema utilizado
+O sistema usado como base e o StudyFlow, um SaaS educacional publicado em:
 
-O sistema usado como base é o **StudyFlow**, um SaaS educacional que adapta trilhas de aprendizagem conforme o desempenho do aluno.
+[https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
-O fluxo considerado nesta atividade envolve:
+A aplicacao usa React, TypeScript, Vite e Clerk. O fluxo pedagogico da versao atual considera:
 
 1. O aluno acessa a plataforma.
-2. O aluno escolhe uma trilha de aprendizagem.
-3. O sistema apresenta uma atividade.
-4. O aluno responde a questão.
-5. O sistema mede automaticamente o tempo de resposta.
-6. O sistema registra acerto, erro, tempo e dificuldade.
-7. O algoritmo calcula desempenho recente.
-8. O sistema recomenda avançar, praticar ou revisar.
-9. A próxima atividade é definida conforme a recomendação.
+2. O aluno autentica pelo Clerk.
+3. O aluno escolhe uma trilha de aprendizagem.
+4. O sistema apresenta a proxima atividade sugerida.
+5. O aluno inicia manualmente a atividade.
+6. O cronometro comeca.
+7. O aluno responde a questao.
+8. O sistema registra acerto, erro, tempo e dificuldade.
+9. O algoritmo calcula o desempenho recente.
+10. O sistema recomenda avancar, praticar ou revisar.
+11. O painel e o historico sao atualizados.
 
-Esse fluxo representa uma função central do sistema: **recomendação adaptativa baseada no desempenho do aluno**.
+Esse fluxo representa uma funcao central do sistema: **recomendacao adaptativa baseada no desempenho do aluno**.
 
----
+## Arquivos da Atividade
 
-## Arquivos da atividade
-
-### Etapa 2 - Fluxograma
-
-Arquivo:
-
-`Etapa_2_Fluxograma_Instrucoes.md`
-
-Esta etapa não contém o fluxograma pronto. Em vez disso, contém instruções e um prompt completo para gerar o fluxograma em uma ferramenta de IA, como a Manus.
-
-O fluxograma deve representar o fluxo principal do StudyFlow, desde o acesso do aluno até a recomendação da próxima atividade.
-
-### Etapa 3 - Pseudocódigo
+### Fluxograma
 
 Arquivo:
 
-`Etapa_3_Pseudocodigo_Recomendacao.md`
+`fluxograma.png`
 
-Esta etapa contém o pseudocódigo da função de recomendação adaptativa do sistema.
+O fluxograma representa o fluxo principal da recomendacao adaptativa, incluindo a etapa atual em que o aluno precisa clicar para iniciar a atividade antes de o cronometro comecar.
 
-O pseudocódigo foi baseado na lógica já implementada no projeto, especialmente na função `recommendNextStep`, que analisa:
+### Pseudocodigo
 
-- taxa de acertos;
-- quantidade de registros recentes;
-- tempo médio de resposta;
-- nível atual do aluno;
-- decisão de avançar, revisar ou continuar praticando.
+Arquivo:
 
----
+`pseudocodigo.md`
 
-## Relação com abstração
+O pseudocodigo foi baseado na funcao real `recommendNextStep`, implementada em `codigo/src/recommendation.ts`.
 
-A abstração aparece na atividade porque o sistema real possui muitos detalhes técnicos, como interface, rotas, estados, temas visuais e componentes React. Para a atividade, esses detalhes são simplificados em entidades e decisões principais:
+Ele considera:
 
-- **Aluno**
-- **Trilha**
-- **Atividade**
-- **Desempenho**
-- **Recomendação**
+- taxa de acerto;
+- registros recentes;
+- tempo medio de resposta;
+- nivel atual do aluno;
+- decisao de avancar, revisar ou continuar praticando.
 
-Assim, é possível entender o funcionamento essencial do sistema sem depender da implementação completa.
+## Relacao com Abstracao
 
+A abstracao aparece porque o sistema real possui muitos detalhes tecnicos, como interface, rotas, estados, autenticacao, temas visuais e componentes React. Para a atividade, esses detalhes sao simplificados em entidades e decisoes principais:
+
+- Aluno.
+- Trilha.
+- Atividade.
+- Desempenho.
+- Recomendacao.
+
+Assim, e possivel entender o funcionamento essencial do sistema sem depender da implementacao completa.

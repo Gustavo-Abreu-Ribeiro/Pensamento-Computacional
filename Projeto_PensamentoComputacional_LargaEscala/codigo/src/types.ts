@@ -28,10 +28,10 @@ export type LearningTrail = {
   title: string;
   description: string;
   target: string;
-  color: "blue" | "green" | "orange";
+  color: "blue" | "green" | "orange" | "pink" | "cyan";
 };
 
-export type Activity = {
+export type ActivityBase = {
   id: number;
   trailId: string;
   title: string;
@@ -39,9 +39,24 @@ export type Activity = {
   difficulty: Difficulty;
   estimatedMinutes: number;
   question: string;
+};
+
+export type QuizActivity = ActivityBase & {
+  type: "quiz";
   options: string[];
   correctOption: number;
 };
+
+export type CodeActivity = ActivityBase & {
+  type: "code";
+  prompt: string;
+  starterCode: string;
+  expectedKeywords: string[];
+  forbiddenKeywords?: string[];
+  sampleAnswer: string;
+};
+
+export type Activity = QuizActivity | CodeActivity;
 
 export type PerformanceRecord = {
   activityId: number;

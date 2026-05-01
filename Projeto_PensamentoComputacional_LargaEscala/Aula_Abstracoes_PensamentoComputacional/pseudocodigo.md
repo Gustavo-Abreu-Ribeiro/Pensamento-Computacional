@@ -1,85 +1,78 @@
-# Etapa 3 - Pseudocódigo da Recomendação Adaptativa
+# Pseudocodigo da Recomendacao Adaptativa
 
-Esta etapa apresenta o pseudocódigo de uma função central do sistema **StudyFlow**: a recomendação da próxima ação do aluno com base no desempenho recente.
+Esta etapa apresenta o pseudocodigo de uma funcao central do StudyFlow: recomendar a proxima acao do aluno com base no desempenho recente.
 
-A função foi escolhida porque representa diretamente a proposta do sistema:
+A funcao escolhida representa diretamente a proposta do sistema:
 
 - registrar desempenho;
 - analisar acertos, erros e tempo de resposta;
 - adaptar a dificuldade;
-- recomendar revisão, prática ou avanço.
+- recomendar revisao, pratica ou avanco.
 
----
+## Funcao Escolhida
 
-## Função escolhida
-
-Função do sistema:
+Funcao real no codigo:
 
 `recommendNextStep`
 
-Local no código:
+Local:
 
 `codigo/src/recommendation.ts`
 
 Responsabilidade:
 
-Analisar os registros recentes de desempenho do aluno e decidir qual deve ser a próxima recomendação.
-
----
+Analisar os registros recentes de desempenho do aluno e decidir qual deve ser a proxima recomendacao.
 
 ## Entradas
 
-A função recebe:
+A funcao recebe:
 
 - `nivelAtual`: dificuldade atual do aluno;
 - `registros`: lista de respostas recentes do aluno.
 
-Cada registro contém:
+Cada registro contem:
 
 - atividade respondida;
 - trilha da atividade;
+- conteudo;
 - se a resposta foi correta ou incorreta;
 - tempo de resposta em segundos;
 - dificuldade da atividade.
 
----
+## Saida
 
-## Saídas
+A funcao retorna uma recomendacao contendo:
 
-A função retorna uma recomendação contendo:
-
-- próxima dificuldade;
-- ação recomendada;
+- proxima dificuldade;
+- acao recomendada;
 - mensagem explicativa.
 
-As ações possíveis são:
+As acoes possiveis sao:
 
-- `avançar`;
+- `avancar`;
 - `revisar`;
 - `praticar`.
 
----
-
-## Pseudocódigo
+## Pseudocodigo
 
 ```text
-FUNÇÃO recomendarProximoPasso(nivelAtual, registros)
+FUNCAO recomendarProximoPasso(nivelAtual, registros)
 
     DEFINIR ordemDificuldade COMO [iniciante, intermediario, avancado]
 
-    SE registros estiver vazio ENTÃO
-        RETORNAR recomendação:
-            próximaDificuldade = nivelAtual
-            ação = "praticar"
-            mensagem = "Comece por uma atividade base para criar o primeiro histórico."
+    SE registros estiver vazio ENTAO
+        RETORNAR:
+            proximaDificuldade = nivelAtual
+            acao = "praticar"
+            mensagem = "Comece por uma atividade base para criar o primeiro historico."
     FIM SE
 
     totalRegistros <- quantidade de registros
     totalAcertos <- 0
     somaTempos <- 0
 
-    PARA CADA registro EM registros FAÇA
-        SE registro.correto for verdadeiro ENTÃO
+    PARA CADA registro EM registros FACA
+        SE registro.correto for verdadeiro ENTAO
             totalAcertos <- totalAcertos + 1
         FIM SE
 
@@ -88,81 +81,48 @@ FUNÇÃO recomendarProximoPasso(nivelAtual, registros)
 
     taxaAcertos <- arredondar((totalAcertos / totalRegistros) * 100)
     tempoMedio <- arredondar(somaTempos / totalRegistros)
+    posicaoAtual <- posicao de nivelAtual em ordemDificuldade
 
-    posicaoAtual <- posição de nivelAtual em ordemDificuldade
+    SE taxaAcertos > 80 ENTAO
+        novaPosicao <- menor valor entre posicaoAtual + 1 e ultima posicao da lista
 
-    SE taxaAcertos > 80 ENTÃO
-        novaPosicao <- menor valor entre posicaoAtual + 1 e última posição da lista
-
-        RETORNAR recomendação:
-            próximaDificuldade = ordemDificuldade[novaPosicao]
-            ação = "avançar"
+        RETORNAR:
+            proximaDificuldade = ordemDificuldade[novaPosicao]
+            acao = "avancar"
             mensagem = "Bom desempenho. A trilha pode subir a dificuldade."
     FIM SE
 
-    SE taxaAcertos < 50 ENTÃO
+    SE taxaAcertos < 50 ENTAO
         novaPosicao <- maior valor entre posicaoAtual - 1 e 0
 
-        RETORNAR recomendação:
-            próximaDificuldade = ordemDificuldade[novaPosicao]
-            ação = "revisar"
-            mensagem = "Muitos erros recentes. O ideal agora é revisar o conteúdo anterior."
+        RETORNAR:
+            proximaDificuldade = ordemDificuldade[novaPosicao]
+            acao = "revisar"
+            mensagem = "Muitos erros recentes. O ideal agora e revisar o conteudo anterior."
     FIM SE
 
-    SE tempoMedio > 45 ENTÃO
-        RETORNAR recomendação:
-            próximaDificuldade = nivelAtual
-            ação = "revisar"
-            mensagem = "O tempo médio está alto. Uma revisão curta pode destravar o progresso."
+    SE tempoMedio > 45 ENTAO
+        RETORNAR:
+            proximaDificuldade = nivelAtual
+            acao = "revisar"
+            mensagem = "O tempo medio esta alto. Uma revisao curta pode destravar o progresso."
     FIM SE
 
-    RETORNAR recomendação:
-        próximaDificuldade = nivelAtual
-        ação = "praticar"
-        mensagem = "Desempenho estável. Continue praticando neste nível."
+    RETORNAR:
+        proximaDificuldade = nivelAtual
+        acao = "praticar"
+        mensagem = "Desempenho estavel. Continue praticando neste nivel."
 
-FIM FUNÇÃO
+FIM FUNCAO
 ```
 
----
+## Relacao com Pensamento Computacional
 
-## Explicação do pseudocódigo
+- **Decomposicao**: separa calculo de acertos, tempo medio e decisao final.
+- **Reconhecimento de padroes**: identifica acerto alto, erro recorrente e demora.
+- **Abstracao**: ignora detalhes de interface e foca nos dados essenciais.
+- **Algoritmo**: define uma sequencia clara de condicoes para gerar a recomendacao.
 
-O algoritmo começa verificando se já existem registros de desempenho. Caso não existam, o sistema não tem dados suficientes para personalizar a trilha, então recomenda que o aluno pratique no nível atual.
+## Relacao com o Sistema Atual
 
-Quando existem registros, o algoritmo calcula:
-
-- a taxa de acertos;
-- o tempo médio de resposta;
-- a posição do nível atual na ordem de dificuldade.
-
-Depois disso, aplica regras simples:
-
-1. Se o aluno acerta mais de 80%, o sistema entende que ele está indo bem e pode avançar.
-2. Se o aluno acerta menos de 50%, o sistema entende que há dificuldade e recomenda revisão.
-3. Se o tempo médio passa de 45 segundos, o sistema entende que o aluno pode estar demorando muito e recomenda revisão.
-4. Se nenhuma condição crítica acontece, o sistema recomenda continuar praticando.
-
----
-
-## Relação com pensamento computacional
-
-Este pseudocódigo utiliza conceitos de pensamento computacional:
-
-- **Decomposição**: separa o problema em cálculo de acertos, cálculo de tempo e decisão de recomendação.
-- **Reconhecimento de padrões**: identifica padrões de erro, acerto e demora.
-- **Abstração**: ignora detalhes da interface e foca apenas nos dados essenciais do desempenho.
-- **Algoritmo**: define uma sequência clara de passos para gerar a recomendação.
-
----
-
-## Relação com o sistema proposto
-
-No StudyFlow, esse algoritmo é usado após o aluno responder uma atividade. Ele ajuda o sistema a decidir se deve:
-
-- apresentar uma atividade mais difícil;
-- manter o aluno praticando no mesmo nível;
-- recomendar revisão do conteúdo.
-
-Assim, o pseudocódigo representa uma parte real da lógica do SaaS educacional proposto no projeto.
-
+No StudyFlow, esse algoritmo e usado apos o aluno responder uma atividade. A resposta atualiza o historico, recalcula a recomendacao e influencia a proxima atividade sugerida.
