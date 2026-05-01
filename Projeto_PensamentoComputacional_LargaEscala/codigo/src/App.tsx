@@ -315,16 +315,15 @@ export default function App() {
       <main className="auth-shell">
         <section className="auth-hero">
           <span className="brand-mark">SF</span>
-          <p className="eyebrow">StudyFlow SaaS</p>
-          <h1>Aprendizagem adaptativa para instituições de ensino.</h1>
+          <p className="eyebrow">Pensamento Computacional</p>
+          <h1>Trilhas de aprendizagem que se adaptam ao seu ritmo.</h1>
           <p>
-            Plataforma com trilhas, desempenho em tempo real, recomendação adaptativa, SSO e
-            preparação para hospedagem em produção.
+            Explore algoritmos, padrões, código prático e sistemas de larga escala. O sistema aprende com cada resposta e recomenda o próximo passo ideal para você.
           </p>
           <div className="auth-badges">
-            <span>Multi-instituição</span>
-            <span>SSO ready</span>
-            <span>Deploy web</span>
+            <span>5 trilhas</span>
+            <span>Recomendação ativa</span>
+            <span>Tempo real</span>
           </div>
         </section>
 
@@ -377,11 +376,10 @@ export default function App() {
       <>
         <section className="hero-panel">
           <div>
-            <p className="eyebrow">Ambiente institucional</p>
-            <h1>Gerencie trilhas, dados de desempenho e recomendações em um SaaS educacional.</h1>
+            <p className="eyebrow">Aprendizagem adaptativa</p>
+            <h1>Um sistema inteligente que aprende com cada aluno.</h1>
             <p>
-              O StudyFlow organiza turmas, mede tempo de resposta apenas quando a atividade é
-              iniciada e transforma dados recentes em decisões pedagógicas.
+              Trilhas personalizadas que se ajustam em tempo real. Quanto mais o aluno interage, mais precisa fica a recomendação do próximo passo. Ideal para turmas de computação e pensamento lógico.
             </p>
           </div>
           <div className="hero-actions">

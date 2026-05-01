@@ -341,9 +341,16 @@ input:focus-visible {
 }
 
 .auth-hero .brand-mark {
-  margin-bottom: 32px;
+  margin: auto auto 32px auto;
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary) !important;
+  font-size: 1.4rem;
+  width: 60px;
+  height: 60px;
 }
 
 .auth-hero h1 {
@@ -493,7 +500,7 @@ input:focus-visible {
 
 .brand-mark {
   align-items: center;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   border-radius: var(--radius-sm);
   color: #ffffff;
   display: inline-grid;
