@@ -1,35 +1,35 @@
 # Projeto - Pensamento Computacional para Sistemas de Larga Escala
 
-## Descricao
+## Descrição
 
-Este projeto foi desenvolvido para a disciplina Pensamento Computacional, no curso de Ciencia da Computacao da UDF.
+Este projeto foi desenvolvido para a disciplina Pensamento Computacional, no curso de Ciência da Computação da UDF.
 
-O objetivo e aplicar conceitos de pensamento computacional e engenharia de software na concepcao de um sistema educacional com caracteristicas de larga escala, explorando decomposicao, abstracao, reconhecimento de padroes, algoritmos, autenticacao, experiencia de usuario e publicacao web.
+O objetivo é aplicar conceitos de pensamento computacional e engenharia de software na concepção de um sistema educacional com características de larga escala, explorando decomposição, abstração, reconhecimento de padrões, algoritmos, autenticação, experiência de usuário e publicação web.
 
 ## Sistema Proposto
 
 **Nome do sistema:** StudyFlow - Plataforma de Aprendizagem Adaptativa
 
-O StudyFlow e um SaaS educacional que organiza trilhas de aprendizagem e adapta a proxima atividade conforme o desempenho recente do aluno. A versao atual esta publicada na Vercel:
+O StudyFlow é um SaaS educacional que organiza trilhas de aprendizagem e adapta a próxima atividade conforme o desempenho recente do aluno. A versão atual está publicada na Vercel:
 
 [https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
-## Implementacao Atual
+## Implementação Atual
 
-A aplicacao foi implementada com React, TypeScript, Vite, Clerk e estrutura preparada para Tauri. O app funciona como uma demonstracao navegavel do SaaS, com autenticacao real via Clerk e dados de estudo mantidos localmente na sessao do navegador.
+A aplicação foi implementada com React, TypeScript, Vite, Clerk e estrutura preparada para Tauri. O app funciona como uma demonstração navegável do SaaS, com autenticação real via Clerk e dados de estudo mantidos localmente na sessão do navegador.
 
 Recursos implementados:
 
 - Login protegido por Clerk, com suporte aos provedores configurados na conta.
-- Layout de SaaS educacional com sidebar, paginas internas e footer discreto no fim da pagina.
-- Rotas internas: Inicio, Trilhas, Painel, Atividade, Historico e Configuracoes.
-- Catalogo com cinco trilhas: Logica e algoritmos, Padroes e abstracao, Programacao pratica, Dados e recomendacao, Sistemas de larga escala.
-- Ambiente de atividade com inicio manual, cronometro real apos o clique em iniciar e correcao automatica.
-- Atividades de multipla escolha e desafios curtos de codigo com avaliacao automatica por cobertura de requisitos.
+- Layout de SaaS educacional com sidebar, páginas internas e footer discreto no fim da página.
+- Rotas internas: Início, Trilhas, Painel, Atividade, Histórico e Configurações.
+- Catálogo com cinco trilhas: Lógica e algoritmos, Padrões e abstração, Programação prática, Dados e recomendação, Sistemas de larga escala.
+- Ambiente de atividade com início manual, cronômetro real após o clique em iniciar e correção automática.
+- Atividades de múltipla escolha e desafios curtos de código com avaliação automática por cobertura de requisitos.
 - Registro de desempenho por trilha, conteudo, resultado, tempo de resposta e dificuldade.
-- Painel com nivel atual, taxa de acerto, tempo medio, trilhas completas e recomendacao pedagogica.
-- Algoritmo de recomendacao baseado em taxa de acerto, erros recentes e tempo medio.
-- Personalizacao de aluno, instituicao e turma dentro da sessao.
+- Painel com nível atual, taxa de acerto, tempo médio, trilhas completas e recomendação pedagógica.
+- Algoritmo de recomendação baseado em taxa de acerto, erros recentes e tempo médio.
+- Personalização de aluno, instituição e turma dentro da sessão.
 - Nove temas visuais: Moderno, Escuro, Pastel, Terroso, Vibrante, Cores fortes, Neo brutalism, Editorial e Aurora Glass.
 - Identidade institucional atualizada para UDF.
 - Build de producao gerado em `codigo/dist`.
@@ -40,24 +40,24 @@ Recursos implementados:
 
 O sistema foi dividido em partes menores:
 
-- Autenticacao e controle de acesso.
-- Perfil do aluno e configuracao da turma.
+- Autenticação e controle de acesso.
+- Perfil do aluno e configuração da turma.
 - Trilhas e atividades.
 - Registro de desempenho.
-- Algoritmo de recomendacao.
-- Painel, historico e temas visuais.
+- Algoritmo de recomendação.
+- Painel, histórico e temas visuais.
 - Deploy web.
 
-### Reconhecimento de Padroes
+### Reconhecimento de Padrões
 
-O StudyFlow observa padroes nos registros recentes:
+O StudyFlow observa padrões nos registros recentes:
 
-- Frequencia de acertos e erros.
-- Tempo medio de resposta.
-- Dificuldades por conteudo e trilha.
-- Evolucao do nivel do aluno.
+- Frequência de acertos e erros.
+- Tempo médio de resposta.
+- Dificuldades por conteúdo e trilha.
+- Evolução do nível do aluno.
 
-### Abstracao
+### Abstração
 
 Os detalhes da interface sao reduzidos a entidades principais:
 
@@ -66,7 +66,7 @@ Os detalhes da interface sao reduzidos a entidades principais:
 - Atividade.
 - Resposta de codigo.
 - Registro de desempenho.
-- Recomendacao.
+- Recomendação.
 - Workspace institucional.
 
 ### Algoritmos
@@ -78,26 +78,26 @@ O algoritmo `recommendNextStep`, em `codigo/src/recommendation.ts`, usa regras s
 - Se o tempo medio for maior que 45 segundos, recomenda revisar.
 - Nos demais casos, recomenda continuar praticando.
 
-## Caracterizacao como Sistema de Larga Escala
+## Caracterização como Sistema de Larga Escala
 
 O projeto foi concebido para representar problemas comuns de sistemas educacionais de maior porte:
 
-- Muitos alunos e instituicoes usando a mesma plataforma.
+- Muitos alunos e instituições usando a mesma plataforma.
 - Grande volume de eventos de aprendizagem.
-- Necessidade de recomendacoes frequentes.
-- Personalizacao por aluno, turma e trilha.
-- Autenticacao segura e possibilidade de integracao com provedores externos.
-- Evolucao futura para persistencia em banco de dados e relatorios institucionais.
+- Necessidade de recomendações frequentes.
+- Personalização por aluno, turma e trilha.
+- Autenticação segura e possibilidade de integração com provedores externos.
+- Evolução futura para persistência em banco de dados e relatórios institucionais.
 
-Na versao atual, os dados pedagogicos ficam no navegador. Em uma versao de producao completa, eles seriam persistidos em banco de dados e associados ao usuario autenticado.
+Na versão atual, os dados pedagógicos ficam no navegador. Em uma versão de produção completa, eles seriam persistidos em banco de dados e associados ao usuário autenticado.
 
 ## Acesso ao SaaS
 
-Versao publicada:
+Versão publicada:
 
 [https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
-Versao local:
+Versão local:
 
 ```bash
 cd codigo
@@ -105,11 +105,11 @@ npm install
 npm run dev
 ```
 
-O Vite informara a porta local no terminal. Neste ambiente, a aplicacao costuma abrir em:
+O Vite informará a porta local no terminal. Neste ambiente, a aplicação costuma abrir em:
 
 [http://127.0.0.1:1420/](http://127.0.0.1:1420/)
 
-## Gerar Build de Producao
+## Gerar Build de Produção
 
 ```bash
 cd codigo
@@ -119,9 +119,9 @@ npm run build
 
 O build final fica em `codigo/dist`.
 
-## Rodar como Aplicacao Desktop com Tauri
+## Rodar como Aplicação Desktop com Tauri
 
-Para usar o Tauri, e necessario ter Node.js, npm e Rust instalados.
+Para usar o Tauri, é necessário ter Node.js, npm e Rust instalados.
 
 ```bash
 cd codigo
@@ -131,16 +131,16 @@ npm run tauri dev
 
 ## Estrutura do Projeto
 
-- `README.md`: documentacao principal.
-- `Design.md`: arquitetura, modulos e fluxo do sistema.
-- `Desafios.md`: desafios tecnicos e de larga escala.
-- `Diagrama.png`: diagrama atualizado dos modulos principais.
-- `Aula_Abstracoes_PensamentoComputacional`: atividade de abstracao, fluxograma e pseudocodigo.
-- `codigo`: aplicacao web/desktop.
-- `codigo/src`: interface, dados de exemplo, cronometro e algoritmo de recomendacao.
-- `codigo/src-tauri`: configuracao inicial para gerar app desktop.
-- `codigo/DEPLOY.md`: orientacoes de publicacao e manutencao do deploy.
+- `README.md`: documentação principal.
+- `Design.md`: arquitetura, módulos e fluxo do sistema.
+- `Desafios.md`: desafios técnicos e de larga escala.
+- `Diagrama.png`: diagrama atualizado dos módulos principais.
+- `Aula_Abstracoes_PensamentoComputacional`: atividade de abstração, fluxograma e pseudocódigo.
+- `codigo`: aplicação web/desktop.
+- `codigo/src`: interface, dados de exemplo, cronômetro e algoritmo de recomendação.
+- `codigo/src-tauri`: configuração inicial para gerar app desktop.
+- `codigo/DEPLOY.md`: orientações de publicação e manutenção do deploy.
 
 ## Documentos e Fluxos
 
-O arquivo `Diagrama.png` resume a arquitetura modular atual do StudyFlow. O arquivo `Aula_Abstracoes_PensamentoComputacional/fluxograma.png` representa o fluxo da recomendacao adaptativa, incluindo a etapa atual em que o aluno precisa iniciar manualmente a atividade para que o cronometro comece.
+O arquivo `Diagrama.png` resume a arquitetura modular atual do StudyFlow. O arquivo `Aula_Abstracoes_PensamentoComputacional/fluxograma.png` representa o fluxo da recomendação adaptativa, incluindo a etapa atual em que o aluno precisa iniciar manualmente a atividade para que o cronômetro comece.

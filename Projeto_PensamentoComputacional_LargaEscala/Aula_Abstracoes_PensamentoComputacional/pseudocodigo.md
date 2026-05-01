@@ -1,17 +1,17 @@
-# Pseudocodigo da Recomendacao Adaptativa
+# Pseudocódigo da Recomendação Adaptativa
 
-Esta etapa apresenta o pseudocodigo de uma funcao central do StudyFlow: recomendar a proxima acao do aluno com base no desempenho recente.
+Esta etapa apresenta o pseudocódigo de uma função central do StudyFlow: recomendar a próxima ação do aluno com base no desempenho recente.
 
-A funcao escolhida representa diretamente a proposta do sistema:
+A função escolhida representa diretamente a proposta do sistema:
 
 - registrar desempenho;
 - analisar acertos, erros e tempo de resposta;
 - adaptar a dificuldade;
-- recomendar revisao, pratica ou avanco.
+- recomendar revisão, prática ou avanço.
 
-## Funcao Escolhida
+## Função Escolhida
 
-Funcao real no codigo:
+Função real no código:
 
 `recommendNextStep`
 
@@ -21,39 +21,39 @@ Local:
 
 Responsabilidade:
 
-Analisar os registros recentes de desempenho do aluno e decidir qual deve ser a proxima recomendacao.
+Analisar os registros recentes de desempenho do aluno e decidir qual deve ser a próxima recomendação.
 
 ## Entradas
 
-A funcao recebe:
+A função recebe:
 
 - `nivelAtual`: dificuldade atual do aluno;
 - `registros`: lista de respostas recentes do aluno.
 
-Cada registro contem:
+Cada registro contém:
 
 - atividade respondida;
 - trilha da atividade;
-- conteudo;
+- conteúdo;
 - se a resposta foi correta ou incorreta;
 - tempo de resposta em segundos;
 - dificuldade da atividade.
 
-## Saida
+## Saída
 
-A funcao retorna uma recomendacao contendo:
+A função retorna uma recomendação contendo:
 
-- proxima dificuldade;
-- acao recomendada;
+- próxima dificuldade;
+- ação recomendada;
 - mensagem explicativa.
 
-As acoes possiveis sao:
+As ações possíveis são:
 
-- `avancar`;
+- `avançar`;
 - `revisar`;
 - `praticar`.
 
-## Pseudocodigo
+## Pseudocódigo
 
 ```text
 FUNCAO recomendarProximoPasso(nivelAtual, registros)
@@ -64,7 +64,7 @@ FUNCAO recomendarProximoPasso(nivelAtual, registros)
         RETORNAR:
             proximaDificuldade = nivelAtual
             acao = "praticar"
-            mensagem = "Comece por uma atividade base para criar o primeiro historico."
+            mensagem = "Comece por uma atividade base para criar o primeiro histórico."
     FIM SE
 
     totalRegistros <- quantidade de registros
@@ -88,7 +88,7 @@ FUNCAO recomendarProximoPasso(nivelAtual, registros)
 
         RETORNAR:
             proximaDificuldade = ordemDificuldade[novaPosicao]
-            acao = "avancar"
+            acao = "avançar"
             mensagem = "Bom desempenho. A trilha pode subir a dificuldade."
     FIM SE
 
@@ -98,31 +98,31 @@ FUNCAO recomendarProximoPasso(nivelAtual, registros)
         RETORNAR:
             proximaDificuldade = ordemDificuldade[novaPosicao]
             acao = "revisar"
-            mensagem = "Muitos erros recentes. O ideal agora e revisar o conteudo anterior."
+            mensagem = "Muitos erros recentes. O ideal agora é revisar o conteúdo anterior."
     FIM SE
 
     SE tempoMedio > 45 ENTAO
         RETORNAR:
             proximaDificuldade = nivelAtual
             acao = "revisar"
-            mensagem = "O tempo medio esta alto. Uma revisao curta pode destravar o progresso."
+            mensagem = "O tempo médio está alto. Uma revisão curta pode destravar o progresso."
     FIM SE
 
     RETORNAR:
         proximaDificuldade = nivelAtual
         acao = "praticar"
-        mensagem = "Desempenho estavel. Continue praticando neste nivel."
+mensagem = "Desempenho estável. Continue praticando neste nível."
 
 FIM FUNCAO
 ```
 
-## Relacao com Pensamento Computacional
+## Relação com Pensamento Computacional
 
-- **Decomposicao**: separa calculo de acertos, tempo medio e decisao final.
-- **Reconhecimento de padroes**: identifica acerto alto, erro recorrente e demora.
-- **Abstracao**: ignora detalhes de interface e foca nos dados essenciais.
-- **Algoritmo**: define uma sequencia clara de condicoes para gerar a recomendacao.
+- **Decomposição**: separa cálculo de acertos, tempo médio e decisão final.
+- **Reconhecimento de padrões**: identifica acerto alto, erro recorrente e demora.
+- **Abstração**: ignora detalhes de interface e foca nos dados essenciais.
+- **Algoritmo**: define uma sequência clara de condições para gerar a recomendação.
 
-## Relacao com o Sistema Atual
+## Relação com o Sistema Atual
 
-No StudyFlow, esse algoritmo e usado apos o aluno responder uma atividade. A resposta atualiza o historico, recalcula a recomendacao e influencia a proxima atividade sugerida.
+No StudyFlow, esse algoritmo é usado após o aluno responder uma atividade. A resposta atualiza o histórico, recalcula a recomendação e influencia a próxima atividade sugerida.

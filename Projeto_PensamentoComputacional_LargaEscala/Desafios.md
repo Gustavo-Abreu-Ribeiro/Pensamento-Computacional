@@ -2,18 +2,18 @@
 
 ## Visão Geral
 
-O StudyFlow representa um SaaS educacional de aprendizagem adaptativa. Mesmo em uma versao demonstrativa, o projeto evidencia desafios comuns em sistemas de larga escala: autenticação, personalização, recomendação, volume de dados, segurança e experiência de uso.
+O StudyFlow representa um SaaS educacional de aprendizagem adaptativa. Mesmo em uma versão demonstrativa, o projeto evidencia desafios comuns em sistemas de larga escala: autenticação, personalização, recomendação, volume de dados, segurança e experiência de uso.
 
 ## Escalabilidade
 
 Em um cenário real, a plataforma precisaria suportar:
 
 - Muitos alunos acessando simultaneamente.
-- Multiplas instituicoes usando o mesmo produto.
-- Grande volume de respostas, tempos e historicos.
+- Múltiplas instituições usando o mesmo produto.
+- Grande volume de respostas, tempos e históricos.
 - Recomendações frequentes após cada atividade.
 
-A versao atual usa dados locais no navegador. Em produção, o desafio seria migrar esses registros para uma arquitetura persistente e escalável.
+A versão atual usa dados locais no navegador. Em produção, o desafio seria migrar esses registros para uma arquitetura persistente e escalável.
 
 ## Desempenho
 
@@ -21,33 +21,33 @@ O sistema deve responder rapidamente após cada resposta do aluno. A recomendaç
 
 ## Personalização
 
-Cada aluno pode ter nível, trilha e histórico diferentes. Isso exige regras capazes de adaptar o conteudo sem criar uma experiência confusa ou imprevisível.
+Cada aluno pode ter nível, trilha e histórico diferentes. Isso exige regras capazes de adaptar o conteúdo sem criar uma experiência confusa ou imprevisível.
 
 ## Cold Start
 
-Alunos novos não possuem histórico suficiente para análise. A solução atual e iniciar com uma atividade base e adaptar a trilha conforme as primeiras interações.
+Alunos novos não possuem histórico suficiente para análise. A solução atual é iniciar com uma atividade base e adaptar a trilha conforme as primeiras interações.
 
 ## Segurança e Privacidade
 
 Dados de desempenho educacional podem revelar dificuldades, progresso e comportamento de estudo. Em uma versão completa, seria necessário garantir:
 
-- Controle de acesso por usuario.
-- Separacao entre dados de instituições.
-- Persistencia segura.
-- Politicas de privacidade.
+- Controle de acesso por usuário.
+- Separação entre dados de instituições.
+- Persistência segura.
+- Políticas de privacidade.
 - Proteção contra acesso indevido aos históricos.
 
 ## Autenticação Externa
 
-O projeto usa Clerk para login. O desafio em larga escala é manter integração consistente com provedores, permissões, sessões, perfis e possiveis papéis como aluno, professor e administrador.
+O projeto usa Clerk para login. O desafio em larga escala é manter integração consistente com provedores, permissões, sessões, perfis e possíveis papéis como aluno, professor e administrador.
 
 ## Consistência dos Dados
 
-Em larga escala, respostas e recomendações precisam permanecer consistentes mesmo com acessos simultâneos, falhas de rede ou multiplos dispositivos. A versão atual simplifica esse ponto usando `localStorage`.
+Em larga escala, respostas e recomendações precisam permanecer consistentes mesmo com acessos simultâneos, falhas de rede ou múltiplos dispositivos. A versão atual simplifica esse ponto usando `localStorage`.
 
 ## Deploy e Operação
 
-A versao atual está publicada na Vercel:
+A versão atual está publicada na Vercel:
 
 [https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
@@ -55,4 +55,4 @@ Em uma operação real, também seriam necessários monitoramento, logs, control
 
 ## Experiência Visual
 
-O sistema possui nove temas. O desafio é manter consistencia visual, acessibilidade e legibilidade em todas as rotas, inclusive nos temas que mudam forma e linguagem visual, como Neo brutalism, Editorial e Aurora Glass.
+O sistema possui nove temas. O desafio é manter consistência visual, acessibilidade e legibilidade em todas as rotas, inclusive nos temas que mudam forma e linguagem visual, como Neo brutalism, Editorial e Aurora Glass.

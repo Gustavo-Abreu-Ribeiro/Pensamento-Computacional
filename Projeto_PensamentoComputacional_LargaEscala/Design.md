@@ -1,44 +1,44 @@
 # Design do Sistema - StudyFlow
 
-## Visao Geral
+## Visão Geral
 
-O StudyFlow e um SaaS educacional de aprendizagem adaptativa. A aplicacao atual esta publicada em:
+O StudyFlow é um SaaS educacional de aprendizagem adaptativa. A aplicação atual está publicada em:
 
 [https://pensamento-computacional-jet.vercel.app](https://pensamento-computacional-jet.vercel.app)
 
-O design foi estruturado para demonstrar como um sistema de larga escala pode ser decomposto em modulos menores, com separacao clara entre autenticacao, trilhas, atividades, registros de desempenho, recomendacao e visualizacao de progresso.
+O design foi estruturado para demonstrar como um sistema de larga escala pode ser decomposto em módulos menores, com separação clara entre autenticação, trilhas, atividades, registros de desempenho, recomendação e visualização de progresso.
 
-## Modulos Principais
+## Módulos Principais
 
-### Autenticacao
+### Autenticação
 
-O acesso ao sistema e protegido por Clerk. O usuario precisa autenticar antes de visualizar a area interna do StudyFlow.
+O acesso ao sistema é protegido por Clerk. O usuário precisa autenticar antes de visualizar a área interna do StudyFlow.
 
 ### Workspace Institucional
 
-Representa o contexto da instituicao, curso ou turma. Na versao atual, a instituicao padrao e UDF, e as informacoes podem ser ajustadas na propria sessao.
+Representa o contexto da instituição, curso ou turma. Na versão atual, a instituição padrão é UDF, e as informações podem ser ajustadas na própria sessão.
 
 ### Perfil do Aluno
 
-Mantem nome, nivel atual e sequencia de acertos. O nivel pode ser `iniciante`, `intermediario` ou `avancado`.
+Mantém nome, nível atual e sequência de acertos. O nível pode ser `iniciante`, `intermediario` ou `avancado`.
 
 ### Trilhas de Aprendizagem
 
 O sistema possui cinco trilhas:
 
-- Logica e algoritmos.
-- Padroes e abstracao.
-- Programacao pratica.
-- Dados e recomendacao.
+- Lógica e algoritmos.
+- Padrões e abstração.
+- Programação prática.
+- Dados e recomendação.
 - Sistemas de larga escala.
 
 Cada trilha agrupa atividades por objetivo educacional e permite acompanhar progresso.
 
 ### Ambiente de Atividade
 
-O aluno escolhe uma trilha e abre uma atividade sugerida. O cronometro so comeca quando o aluno clica em iniciar, evitando contagem automatica apenas por abrir a pagina.
+O aluno escolhe uma trilha e abre uma atividade sugerida. O cronômetro só começa quando o aluno clica em iniciar, evitando contagem automática apenas por abrir a página.
 
-As atividades podem ser de multipla escolha ou de codigo curto. Nos desafios de codigo, o aluno escreve uma resposta em JavaScript e o app calcula uma porcentagem de cobertura com base em estruturas esperadas, palavras-chave e termos proibidos.
+As atividades podem ser de múltipla escolha ou de código curto. Nos desafios de código, o aluno escreve uma resposta em JavaScript e o app calcula uma porcentagem de cobertura com base em estruturas esperadas, palavras-chave e termos proibidos.
 
 ### Registro de Desempenho
 
@@ -46,68 +46,68 @@ Cada resposta gera um registro com:
 
 - atividade;
 - trilha;
-- conteudo;
+- conteúdo;
 - resultado;
 - tempo de resposta;
 - dificuldade.
 
-Na versao atual, esses dados ficam em `localStorage`.
+Na versão atual, esses dados ficam em `localStorage`.
 
-### Recomendacao Adaptativa
+- Recomendação adaptativa
 
-O modulo `codigo/src/recommendation.ts` calcula taxa de acerto e tempo medio para recomendar uma das acoes:
+O módulo `codigo/src/recommendation.ts` calcula taxa de acerto e tempo médio para recomendar uma das ações:
 
 - avancar;
 - revisar;
 - praticar.
 
-### Painel e Historico
+### Painel e Histórico
 
-O painel mostra metricas gerais e da trilha ativa. O historico lista os registros de respostas da sessao.
+O painel mostra métricas gerais e da trilha ativa. O histórico lista os registros de respostas da sessão.
 
-### Configuracoes Visuais
+### Configurações Visuais
 
-A pagina de configuracoes permite alternar entre nove temas, incluindo temas que mudam apenas a paleta e temas que tambem alteram forma e linguagem visual, como Neo brutalism, Editorial e Aurora Glass.
+A página de configurações permite alternar entre nove temas, incluindo temas que mudam apenas a paleta e temas que também alteram forma e linguagem visual, como Neo brutalism, Editorial e Aurora Glass.
 
 ## Fluxo de Funcionamento
 
-1. O usuario acessa o deploy ou a versao local.
-2. O usuario autentica pelo Clerk.
+1. O usuário acessa o deploy ou a versão local.
+2. O usuário autentica pelo Clerk.
 3. O sistema abre o workspace StudyFlow.
 4. O aluno escolhe uma trilha.
 5. O sistema sugere uma atividade conforme o desempenho recente.
 6. O aluno clica em iniciar atividade.
-7. O cronometro comeca.
-8. O aluno responde a questao.
+7. O cronômetro começa.
+8. O aluno responde a questão.
 9. O sistema registra desempenho e tempo.
-10. O algoritmo calcula a recomendacao.
-11. O painel e o historico sao atualizados.
-12. O sistema define a proxima atividade.
+10. O algoritmo calcula a recomendação.
+11. O painel e o histórico são atualizados.
+12. O sistema define a próxima atividade.
 
-## Algoritmo de Recomendacao
+## Algoritmo de Recomendação
 
-As regras atuais sao:
+As regras atuais são:
 
-- Sem historico: praticar no nivel atual.
-- Taxa de acerto acima de 80%: avancar a dificuldade.
+- Sem histórico: praticar no nível atual.
+- Taxa de acerto acima de 80%: avançar a dificuldade.
 - Taxa de acerto abaixo de 50%: revisar.
-- Tempo medio acima de 45 segundos: revisar.
-- Caso contrario: continuar praticando.
+- Tempo médio acima de 45 segundos: revisar.
+- Caso contrário: continuar praticando.
 
-Esse algoritmo tem baixo custo computacional e e adequado para demonstrar a logica antes de evoluir para modelos mais complexos.
+Esse algoritmo tem baixo custo computacional e é adequado para demonstrar a lógica antes de evoluir para modelos mais complexos.
 
-## Escalabilidade e Evolucao
+## Escalabilidade e Evolução
 
-A versao atual demonstra o fluxo do produto. Para uma versao completa em producao, os proximos passos seriam:
+A versão atual demonstra o fluxo do produto. Para uma versão completa em produção, os próximos passos seriam:
 
 - Persistir desempenho em banco de dados.
-- Associar registros ao usuario autenticado no Clerk.
+- Associar registros ao usuário autenticado no Clerk.
 - Criar perfis de professor e administrador.
-- Gerar relatorios por turma e instituicao.
-- Processar recomendacoes em lote ou em servicos separados conforme o volume de uso.
-- Adicionar observabilidade, auditoria e politicas de seguranca para dados educacionais.
+- Gerar relatórios por turma e instituição.
+- Processar recomendações em lote ou em serviços separados conforme o volume de uso.
+- Adicionar observabilidade, auditoria e políticas de segurança para dados educacionais.
 
 ## Diagramas
 
-- `Diagrama.png`: visao modular atualizada.
-- `Aula_Abstracoes_PensamentoComputacional/fluxograma.png`: fluxo da recomendacao adaptativa.
+- `Diagrama.png`: visão modular atualizada.
+- `Aula_Abstracoes_PensamentoComputacional/fluxograma.png`: fluxo da recomendação adaptativa.
