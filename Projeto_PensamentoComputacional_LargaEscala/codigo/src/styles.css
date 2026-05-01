@@ -344,13 +344,16 @@ input:focus-visible {
   margin: auto auto 32px auto;
   position: relative;
   z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--primary) !important;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+  color: #ffffff;
   font-size: 1.4rem;
+  font-weight: 900;
+  line-height: 1;
   width: 60px;
   height: 60px;
+  border-radius: var(--radius-sm);
 }
 
 .auth-hero h1 {
