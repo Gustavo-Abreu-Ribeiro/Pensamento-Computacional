@@ -11,7 +11,7 @@ import type {
 } from "./types";
 
 const initialWorkspace = {
-  institution: "Centro Universitário Internacional Uninter",
+  institution: "UDF",
   className: "Ciência da Computação",
   goal: "Reforçar algoritmos, abstração e sistemas de larga escala"
 };
@@ -35,44 +35,42 @@ const themes = [
   {
     id: "default",
     name: "Moderno",
-    description: "Azul, verde suave e base clara para um SaaS educacional profissional.",
-    swatches: ["#4677ff", "#31c7a9", "#f5f7fb"]
+    swatches: ["#315fd8", "#12b981", "#f5f7fb"]
   },
   {
     id: "dark",
     name: "Escuro",
-    description: "Grafite, azul eletrico e alto contraste para uso prolongado.",
-    swatches: ["#111827", "#60a5fa", "#22c55e"]
+    swatches: ["#0b1020", "#38bdf8", "#f59e0b"]
   },
   {
     id: "pastel",
     name: "Pastel",
-    description: "Cores suaves e amigaveis para uma experiencia leve.",
-    swatches: ["#9db7ff", "#a8e6cf", "#fff1f2"]
+    swatches: ["#f8a4c8", "#8bd3dd", "#fff8e7"]
   },
   {
     id: "earth",
     name: "Terroso",
-    description: "Tons naturais, areia e verde oliva com aparencia acolhedora.",
-    swatches: ["#8b5e34", "#6b8f71", "#f4ead8"]
+    swatches: ["#2f4f3f", "#c26a38", "#f3e4c7"]
   },
   {
     id: "vibrant",
     name: "Vibrante",
-    description: "Energia visual com azul, rosa e amarelo em doses controladas.",
-    swatches: ["#2563eb", "#f43f5e", "#facc15"]
+    swatches: ["#0047ff", "#ff2e63", "#ffe600"]
   },
   {
     id: "strong",
     name: "Cores fortes",
-    description: "Contraste marcante com roxo, ciano e fundo profundo.",
-    swatches: ["#7c3aed", "#06b6d4", "#111827"]
+    swatches: ["#231942", "#ff6b35", "#00d4ff"]
   },
   {
     id: "brutal",
     name: "Neo brutalism",
-    description: "Bordas mais duras, sombras fortes e cores diretas para personalidade.",
     swatches: ["#111111", "#ffcf24", "#57e389"]
+  },
+  {
+    id: "editorial",
+    name: "Editorial",
+    swatches: ["#1f1a17", "#b3261e", "#f7f0df"]
   }
 ] as const;
 
@@ -614,10 +612,9 @@ export default function App() {
               key={item.id}
               onClick={() => setTheme(item.id)}
               type="button"
+              aria-pressed={theme === item.id}
             >
-              <span>{theme === item.id ? "Tema ativo" : "Tema disponível"}</span>
               <strong>{item.name}</strong>
-              <p>{item.description}</p>
               <div className="theme-swatches" aria-hidden="true">
                 {item.swatches.map((color) => (
                   <i key={color} style={{ background: color }} />
@@ -708,7 +705,7 @@ export default function App() {
               <strong>StudyFlow</strong>
               <span>
                 Projeto desenvolvido por Gustavo Ribeiro para a disciplina Pensamento Computacional,
-                Ciência da Computação - Centro Universitário Internacional Uninter.
+                Ciência da Computação - UDF.
               </span>
             </footer>
           </section>
