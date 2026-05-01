@@ -16,6 +16,12 @@ const initialWorkspace = {
   goal: "Reforçar algoritmos, abstração e sistemas de larga escala"
 };
 
+const initialStudent: Student = {
+  name: "Aluno",
+  level: "iniciante",
+  streak: 0
+};
+
 const routeLabels: Record<Route, string> = {
   inicio: "Início",
   trilhas: "Trilhas",
@@ -154,14 +160,6 @@ export default function App() {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem("studyflow-theme", theme);
   }, [theme]);
-
-  useEffect(() => {
-    if (session) {
-      window.localStorage.setItem("studyflow-session", JSON.stringify(session));
-    } else {
-      window.localStorage.removeItem("studyflow-session");
-    }
-  }, [session]);
 
   useEffect(() => {
     if (!activityStarted || startedAt === null) {
@@ -776,4 +774,5 @@ export default function App() {
         </main>
       </SignedIn>
     </>
+  );
 }
