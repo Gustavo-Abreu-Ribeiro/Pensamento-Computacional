@@ -522,11 +522,13 @@ input:focus-visible {
     overflow: hidden;
   }
 
-.brand-mark svg {
+.brand-mark img {
   display: block;
   flex: 0 0 auto;
-  height: 68%;
-  width: 68%;
+  height: 74%;
+  object-fit: contain;
+  object-position: center;
+  width: 74%;
 }
 
 .brand-mark::before {
@@ -1742,9 +1744,9 @@ h3 {
     overflow: hidden;
   }
 
-  .brand-mark svg {
-    height: 66%;
-    width: 66%;
+  .brand-mark img {
+    height: 72%;
+    width: 72%;
   }
 
   .brand-mark::before {
