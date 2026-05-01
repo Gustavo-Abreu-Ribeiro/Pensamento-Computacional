@@ -10,6 +10,17 @@ import type {
   Student
 } from "./types";
 
+function BrandLogo() {
+  return (
+    <svg viewBox="0 0 120 120" role="img" aria-label="StudyFlow logo" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M18 30C18 18 28 10 40 10H86V26H44C36 26 32 30 32 38V48H86V60H32V68C32 76 37 82 45 82H78V68H52C46 68 42 64 42 58V50H86V72H96V34H42V26H18Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 const initialWorkspace = {
   institution: "UDF",
   className: "Ciência da Computação",
@@ -314,7 +325,7 @@ export default function App() {
     return (
       <main className="auth-shell">
         <section className="auth-hero">
-          <span className="brand-mark">SF</span>
+          <span className="brand-mark"><BrandLogo /></span>
           <p className="eyebrow">Pensamento Computacional</p>
           <h1>Trilhas de aprendizagem que se adaptam ao seu ritmo.</h1>
           <p>
@@ -752,7 +763,7 @@ export default function App() {
           <aside className={isMobileMenuOpen ? "sidebar open" : "sidebar"}>
             <div className="sidebar-header">
               <div className="brand">
-                <span className="brand-mark">SF</span>
+                <span className="brand-mark"><BrandLogo /></span>
                 <div>
                   <strong>StudyFlow</strong>
                   <span>SaaS adaptativo</span>
