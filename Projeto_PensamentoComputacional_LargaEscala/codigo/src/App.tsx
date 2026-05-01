@@ -270,20 +270,15 @@ export default function App() {
             <h2>Entrar no StudyFlow</h2>
           </div>
 
-          <div className="sso-grid">
-            <SignInButton mode="modal">
-              <button type="button">SSO Institucional</button>
-            </SignInButton>
-            <SignInButton mode="modal">
-              <button type="button">Google Workspace</button>
-            </SignInButton>
-            <SignInButton mode="modal">
-              <button type="button">Microsoft Entra ID</button>
-            </SignInButton>
-          </div>
+          <SignInButton mode="modal">
+            <button className="primary-button" type="button">
+              Entrar com Clerk SSO
+            </button>
+          </SignInButton>
 
           <p className="auth-note">
-            Autenticação real com Clerk: SSO gratuito para até 10.000 usuários ativos mensais.
+            Autenticação real com Clerk: escolha entre e-mail, Google, GitHub ou outros provedores.
+            Até 10.000 usuários ativos mensais no plano gratuito.
           </p>
         </section>
       </main>
