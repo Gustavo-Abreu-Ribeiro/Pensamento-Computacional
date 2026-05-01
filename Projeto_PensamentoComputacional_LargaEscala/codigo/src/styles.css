@@ -500,12 +500,10 @@ input:focus-visible {
 
 .brand-mark {
   align-items: center;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong));
   border-radius: var(--radius-sm);
   color: #ffffff;
-  display: inline-grid;
-  flex: 0 0 auto;
-  font-size: 0.9rem;
+  display: grid;
   font-weight: 900;
   height: 46px;
   justify-content: center;
