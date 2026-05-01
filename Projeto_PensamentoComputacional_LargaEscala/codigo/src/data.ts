@@ -3,23 +3,23 @@ import type { Activity, LearningTrail } from "./types";
 export const trails: LearningTrail[] = [
   {
     id: "algoritmos",
-    title: "Logica e algoritmos",
-    description: "Base para decompor problemas, criar sequencias de passos e avaliar solucoes.",
-    target: "Alunos iniciando pensamento computacional",
+    title: "Lógica e algoritmos",
+    description: "Base para decompor problemas, criar sequências de passos e avaliar soluções.",
+    target: "Alunos iniciando o pensamento computacional",
     color: "blue"
   },
   {
     id: "padroes",
-    title: "Padroes e abstracao",
-    description: "Atividades para reconhecer repeticoes, generalizar ideias e modelar informacoes.",
-    target: "Turmas em transicao para projetos maiores",
+    title: "Padrões e abstração",
+    description: "Atividades para reconhecer repetições, generalizar ideias e modelar informações.",
+    target: "Turmas em transição para projetos maiores",
     color: "green"
   },
   {
     id: "escala",
     title: "Sistemas de larga escala",
-    description: "Conceitos de desempenho, personalizacao, dados e recomendacao em aplicacoes SaaS.",
-    target: "Alunos conectando software com produto real",
+    description: "Conceitos de desempenho, personalização, dados e recomendação em aplicações SaaS.",
+    target: "Alunos conectando software a produtos reais",
     color: "orange"
   }
 ];
@@ -28,98 +28,151 @@ export const activities: Activity[] = [
   {
     id: 1,
     trailId: "algoritmos",
-    title: "Logica de algoritmos",
+    title: "O que é um algoritmo?",
     topic: "Algoritmos",
     difficulty: "iniciante",
     estimatedMinutes: 8,
-    question: "Qual alternativa representa melhor um algoritmo?",
+    question: "Qual alternativa define melhor um algoritmo?",
     options: [
-      "Uma sequencia finita de passos para resolver um problema",
-      "Um programa que funciona apenas conectado a internet",
-      "Um desenho sem regras definidas"
+      "Uma sequência finita de passos para resolver um problema",
+      "Um programa que funciona somente com internet",
+      "Uma ideia vaga sem regras claras"
     ],
     correctOption: 0
   },
   {
     id: 2,
     trailId: "algoritmos",
-    title: "Condicoes e decisoes",
+    title: "Estruturas condicionais",
     topic: "Algoritmos",
     difficulty: "iniciante",
     estimatedMinutes: 9,
-    question: "Em um algoritmo, para que serve uma estrutura condicional?",
+    question: "Para que serve uma estrutura condicional em um algoritmo?",
     options: [
-      "Para repetir uma tela sem criterio",
-      "Para escolher caminhos diferentes conforme uma regra",
-      "Para eliminar todos os dados do usuario"
+      "Escolher caminhos diferentes de acordo com uma condição",
+      "Repetir um conjunto de passos infinitamente",
+      "Guardar informações sobre o usuário"
     ],
-    correctOption: 1
+    correctOption: 0
   },
   {
     id: 3,
-    trailId: "padroes",
-    title: "Reconhecimento de padroes",
-    topic: "Pensamento computacional",
+    trailId: "algoritmos",
+    title: "Repetição em algoritmos",
+    topic: "Algoritmos",
     difficulty: "iniciante",
     estimatedMinutes: 10,
-    question: "No StudyFlow, qual dado ajuda a encontrar dificuldade recorrente?",
+    question: "Qual é a finalidade de um laço de repetição?",
     options: [
-      "A cor preferida do aluno",
-      "A frequencia de erros por conteudo",
-      "O tamanho da tela usada no acesso"
+      "Executar um conjunto de instruções várias vezes enquanto uma condição se mantém",
+      "Descartar dados após cada execução",
+      "Impedir que o algoritmo termine"
     ],
-    correctOption: 1
+    correctOption: 0
   },
   {
     id: 4,
     trailId: "padroes",
-    title: "Abstracao de entidades",
-    topic: "Modelagem",
-    difficulty: "intermediario",
-    estimatedMinutes: 12,
-    question: "Ao modelar o StudyFlow, qual entidade representa uma resposta registrada?",
-    options: ["Desempenho", "Cor da interface", "Nome do navegador"],
+    title: "Reconhecimento de padrões",
+    topic: "Pensamento computacional",
+    difficulty: "iniciante",
+    estimatedMinutes: 10,
+    question: "Qual informação ajuda a identificar dificuldades recorrentes em registros de aprendizado?",
+    options: [
+      "A frequência de erros por conteúdo",
+      "A cor preferida do aluno",
+      "O horário de acesso ao sistema"
+    ],
     correctOption: 0
   },
   {
     id: 5,
-    trailId: "escala",
-    title: "Ajuste de dificuldade",
-    topic: "Recomendacao",
+    trailId: "padroes",
+    title: "Abstração de entidades",
+    topic: "Modelagem",
     difficulty: "intermediario",
     estimatedMinutes: 12,
-    question: "Se a taxa de acertos passa de 80%, o sistema deve:",
-    options: ["Aumentar a dificuldade", "Apagar o historico", "Encerrar a trilha"],
+    question: "Em modelagem de sistema, qual entidade representa uma resposta registrada?",
+    options: [
+      "Desempenho",
+      "Cor da interface",
+      "Nome do navegador"
+    ],
     correctOption: 0
   },
   {
     id: 6,
-    trailId: "escala",
-    title: "Escalabilidade",
-    topic: "Larga escala",
+    trailId: "padroes",
+    title: "Abstração de informações",
+    topic: "Modelagem",
     difficulty: "intermediario",
-    estimatedMinutes: 14,
-    question: "Qual desafio cresce com muitos usuarios simultaneos?",
+    estimatedMinutes: 12,
+    question: "Qual é o principal propósito da abstração em sistemas de aprendizado?",
     options: [
-      "Processamento frequente de dados",
-      "Ausencia total de dados",
-      "Eliminacao da autenticacao"
+      "Reduzir detalhes para representar apenas o que é relevante",
+      "Aumentar a complexidade de cada função",
+      "Guardar todos os dados possíveis sem classificação"
     ],
     correctOption: 0
   },
   {
     id: 7,
     trailId: "escala",
+    title: "Ajuste de dificuldade",
+    topic: "Recomendação",
+    difficulty: "intermediario",
+    estimatedMinutes: 12,
+    question: "Se a taxa de acertos passa de 80%, o sistema deve:",
+    options: [
+      "Aumentar a dificuldade",
+      "Apagar o histórico",
+      "Encerrar a trilha"
+    ],
+    correctOption: 0
+  },
+  {
+    id: 8,
+    trailId: "escala",
+    title: "Escalabilidade",
+    topic: "Larga escala",
+    difficulty: "intermediario",
+    estimatedMinutes: 14,
+    question: "Qual desafio cresce quando há muitos usuários simultâneos?",
+    options: [
+      "Processar um grande volume de dados com rapidez",
+      "Falta de acesso à internet em todos os dispositivos",
+      "Redundância de perguntas na interface"
+    ],
+    correctOption: 0
+  },
+  {
+    id: 9,
+    trailId: "escala",
     title: "Cold start",
-    topic: "Personalizacao",
+    topic: "Personalização",
     difficulty: "avancado",
     estimatedMinutes: 16,
-    question: "O que o sistema deve fazer com um aluno sem historico?",
+    question: "O que o sistema deve fazer para um aluno sem histórico?",
     options: [
-      "Bloquear recomendacoes permanentemente",
-      "Iniciar com conteudo padrao e adaptar nas primeiras interacoes",
-      "Aumentar sempre para o nivel maximo"
+      "Iniciar com conteúdo padrão e adaptar nas primeiras interações",
+      "Bloquear recomendações permanentemente",
+      "Levar o aluno diretamente ao conteúdo mais difícil"
     ],
-    correctOption: 1
+    correctOption: 0
+  },
+  {
+    id: 10,
+    trailId: "escala",
+    title: "Segurança de dados",
+    topic: "Infraestrutura",
+    difficulty: "avancado",
+    estimatedMinutes: 14,
+    question: "Por que é importante proteger os dados de desempenho do usuário?",
+    options: [
+      "Para garantir privacidade e evitar uso indevido de informações pessoais",
+      "Para reduzir o tamanho do banco de dados",
+      "Para impedir que o usuário acesse a própria trilha"
+    ],
+    correctOption: 0
   }
 ];

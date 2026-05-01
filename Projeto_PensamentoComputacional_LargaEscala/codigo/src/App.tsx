@@ -16,12 +16,12 @@ const initialWorkspace = {
 };
 
 const routeLabels: Record<Route, string> = {
-  inicio: "Inicio",
+  inicio: "Início",
   trilhas: "Trilhas",
   painel: "Painel",
   atividade: "Atividade",
-  historico: "Historico",
-  configuracoes: "Configuracoes"
+  historico: "Histórico",
+  configuracoes: "Configurações"
 };
 
 const themes = [
@@ -223,7 +223,7 @@ export default function App() {
     return (
       <section className="metrics-grid" aria-label="Resumo do aluno">
         <article className="metric-card accent-blue">
-          <span>Nivel atual</span>
+          <span>Nível atual</span>
           <strong>{student.level}</strong>
         </article>
         <article className="metric-card accent-green">
@@ -247,11 +247,11 @@ export default function App() {
       <>
         <section className="hero-panel">
           <div>
-            <p className="eyebrow">Aprendizagem adaptativa em pratica</p>
-            <h1>Organize trilhas, registre desempenho e recomende o proximo passo.</h1>
+            <p className="eyebrow">Aprendizagem adaptativa em prática</p>
+            <h1>Organize trilhas, registre desempenho e recomende o próximo passo.</h1>
             <p>
-              O StudyFlow acompanha acertos, erros e tempo real de resposta para ajustar o nivel
-              do aluno durante a sessao.
+              A plataforma acompanha acertos, erros e tempo real de resposta para ajustar o nível
+              do aluno durante a sessão.
             </p>
           </div>
           <div className="hero-actions">
@@ -266,7 +266,7 @@ export default function App() {
 
         {renderMetrics()}
 
-        <section className="quick-grid" aria-label="Acoes principais">
+        <section className="quick-grid" aria-label="Ações principais">
           <button className="quick-card" type="button" onClick={() => navigate("trilhas")}>
             <span>01</span>
             <strong>Escolher trilha</strong>
@@ -280,7 +280,7 @@ export default function App() {
           <button className="quick-card" type="button" onClick={() => navigate("historico")}>
             <span>03</span>
             <strong>Analisar dados</strong>
-            <p>Use o historico para reconhecer padroes e orientar revisoes.</p>
+            <p>Use o histórico para reconhecer padrões e orientar revisões.</p>
           </button>
         </section>
       </>
@@ -292,7 +292,7 @@ export default function App() {
       <section className="page-stack">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Catalogo de trilhas</p>
+            <p className="eyebrow">Catálogo de trilhas</p>
             <h2>Escolha o foco da aprendizagem</h2>
           </div>
           <button className="ghost-button" type="button" onClick={() => navigate("painel")}>
@@ -474,13 +474,13 @@ export default function App() {
       <section className="history-section">
         <div className="panel-heading">
           <div>
-            <p className="eyebrow">Dados reais da sessao</p>
-            <h2>Historico de desempenho</h2>
+            <p className="eyebrow">Dados reais da sessão</p>
+            <h2>Histórico de desempenho</h2>
           </div>
           <span>{completed} registros</span>
         </div>
 
-        <div className="history-table" role="table" aria-label="Historico de desempenho">
+        <div className="history-table" role="table" aria-label="Histórico de desempenho">
           <div className="history-row header" role="row">
             <span>Trilha</span>
             <span>Conteudo</span>
@@ -531,7 +531,7 @@ export default function App() {
               onClick={() => setTheme(item.id)}
               type="button"
             >
-              <span>{theme === item.id ? "Tema ativo" : "Tema disponivel"}</span>
+              <span>{theme === item.id ? "Tema ativo" : "Tema disponível"}</span>
               <strong>{item.name}</strong>
               <p>{item.description}</p>
               <div className="theme-swatches" aria-hidden="true">
@@ -556,9 +556,8 @@ export default function App() {
           : route === "atividade"
             ? "Ambiente de atividade"
             : route === "historico"
-              ? "Historico e analise"
-              : "Configuracoes";
-
+              ? "Histórico e análise"
+              : "Configurações";
   return (
     <main className="app-shell">
       <aside className="sidebar">
