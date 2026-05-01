@@ -49,34 +49,26 @@ Configuração sugerida:
 
 ## SSO em produção
 
-No protótipo atual, o login e os botões de SSO simulam o fluxo de autenticação.
+Para SSO real e gratuito, integramos o **Clerk** (clerk.com), que oferece:
 
-Para SSO real, seria necessário conectar a aplicação a um provedor OAuth/OIDC, como:
+- Até 10.000 usuários ativos mensais gratuitos
+- Suporte a Google, Microsoft, e provedores customizados
+- SDK fácil para React
+- Gestão de usuários e sessões
 
-- Google Workspace
-- Microsoft Entra ID
-- provedor institucional da faculdade
-- Auth0
-- Clerk
-- Supabase Auth
+### Configuração do Clerk
 
-Em um sistema real, o fluxo recomendado seria:
+1. Crie uma conta gratuita em [clerk.com](https://clerk.com)
+2. Crie uma nova aplicação
+3. Configure os provedores SSO desejados (Google, Microsoft, etc.)
+4. Copie as chaves:
+   - `VITE_CLERK_PUBLISHABLE_KEY` (para frontend)
+   - `CLERK_SECRET_KEY` (para backend, se necessário)
+5. Adicione as chaves no Vercel como variáveis de ambiente
 
-1. O aluno acessa o StudyFlow.
-2. O frontend redireciona para o provedor SSO.
-3. O provedor autentica o usuário.
-4. O usuário retorna para o sistema com um token.
-5. Um backend valida o token.
-6. O sistema cria a sessão e carrega permissões, instituição e turma.
+### Integração no código
 
-## Backend necessário para SaaS real
+O frontend já está integrado com Clerk. Os botões de SSO agora abrem modais reais do Clerk.
 
-Para transformar o StudyFlow em um SaaS completo, seria necessário adicionar:
-
-- API para autenticação e sessões;
-- banco de dados para alunos, instituições, trilhas e desempenho;
-- controle multi-instituição;
-- permissões por perfil;
-- armazenamento seguro dos registros;
-- relatórios persistentes.
+Para produção completa com backend, considere Supabase (gratuito: 500MB banco, 50.000 usuários mensais) para armazenar dados de alunos e registros.
 

@@ -1,21 +1,14 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import { activities, trails } from "./data";
 import { calculateAccuracy, calculateAverageTime, recommendNextStep } from "./recommendation";
 import type {
   Activity,
-  AuthProvider,
-  AuthSession,
   LearningTrail,
   PerformanceRecord,
   Route,
   Student
 } from "./types";
-
-const initialStudent: Student = {
-  name: "Gustavo",
-  level: "iniciante",
-  streak: 0
-};
 
 const initialWorkspace = {
   institution: "Centro Universitário Internacional Uninter",
@@ -31,13 +24,6 @@ const routeLabels: Record<Route, string> = {
   historico: "Histórico",
   implantacao: "Hospedagem",
   configuracoes: "Configurações"
-};
-
-const providerLabels: Record<AuthProvider, string> = {
-  email: "E-mail",
-  google: "Google Workspace",
-  microsoft: "Microsoft Entra ID",
-  institucional: "SSO Institucional"
 };
 
 const themes = [
@@ -122,31 +108,23 @@ function getTrailProgress(trail: LearningTrail, records: PerformanceRecord[]) {
   };
 }
 
-function createSession(provider: AuthProvider, email: string, userName?: string): AuthSession {
-  return {
-    userName: userName?.trim() || email.split("@")[0] || "Gustavo",
-    email,
-    provider,
-    role: provider === "institucional" ? "professor" : "aluno"
-  };
-}
-
 export default function App() {
+  const { user } = useUser();
   const [route, setRoute] = useState<Route>("inicio");
   const [theme, setTheme] = useState<ThemeId>(() => {
     const savedTheme = window.localStorage.getItem("studyflow-theme");
     return themes.some((item) => item.id === savedTheme) ? (savedTheme as ThemeId) : "default";
   });
-  const [session, setSession] = useState<AuthSession | null>(() => {
-    const savedSession = window.localStorage.getItem("studyflow-session");
-    return savedSession ? (JSON.parse(savedSession) as AuthSession) : null;
-  });
-  const [loginName, setLoginName] = useState("Gustavo Ribeiro");
-  const [loginEmail, setLoginEmail] = useState("gustavo.ribeiro@uninter.edu");
   const [selectedTrailId, setSelectedTrailId] = useState(trails[0].id);
-  const [student, setStudent] = useState<Student>(initialStudent);
+  const [student, setStudent] = useState<Student>(() => {
+    const savedStudent = window.localStorage.getItem("studyflow-student");
+    return savedStudent ? JSON.parse(savedStudent) : initialStudent;
+  });
   const [workspace, setWorkspace] = useState(initialWorkspace);
-  const [records, setRecords] = useState<PerformanceRecord[]>([]);
+  const [records, setRecords] = useState<PerformanceRecord[]>(() => {
+    const savedRecords = window.localStorage.getItem("studyflow-records");
+    return savedRecords ? JSON.parse(savedRecords) : [];
+  });
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
@@ -220,29 +198,8 @@ export default function App() {
     setRoute("atividade");
   }
 
-  function loginWithProvider(provider: AuthProvider) {
-    const fallbackEmail =
-      provider === "google"
-        ? "gustavo.ribeiro@gmail.com"
-        : provider === "microsoft"
-          ? "gustavo.ribeiro@outlook.com"
-          : "gustavo.ribeiro@uninter.edu";
-    const nextSession = createSession(provider, loginEmail || fallbackEmail, loginName);
-    setSession(nextSession);
-    setStudent((current) => ({ ...current, name: nextSession.userName }));
-  }
-
-  function submitLogin(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    loginWithProvider("email");
-  }
-
   function logout() {
-    setSession(null);
-    setRoute("inicio");
-    setActivityStarted(false);
-    setStartedAt(null);
-    setElapsedSeconds(0);
+    // Clerk handles logout
   }
 
   function submitAnswer() {
@@ -282,7 +239,7 @@ export default function App() {
   function resetWorkspace() {
     setRoute("inicio");
     setSelectedTrailId(trails[0].id);
-    setStudent(session ? { ...initialStudent, name: session.userName } : initialStudent);
+    setStudent(user ? { ...initialStudent, name: user.firstName || user.username || "Aluno" } : initialStudent);
     setWorkspace(initialWorkspace);
     setRecords([]);
     setSelectedOption(null);
@@ -315,40 +272,20 @@ export default function App() {
             <h2>Entrar no StudyFlow</h2>
           </div>
 
-          <form className="auth-form" onSubmit={submitLogin}>
-            <label>
-              <span>Nome</span>
-              <input value={loginName} onChange={(event) => setLoginName(event.target.value)} />
-            </label>
-            <label>
-              <span>E-mail institucional</span>
-              <input
-                type="email"
-                value={loginEmail}
-                onChange={(event) => setLoginEmail(event.target.value)}
-              />
-            </label>
-            <button className="primary-button" type="submit">
-              Entrar com e-mail
-            </button>
-          </form>
-
-          <div className="sso-divider">ou usar SSO</div>
           <div className="sso-grid">
-            <button type="button" onClick={() => loginWithProvider("institucional")}>
-              SSO Institucional
-            </button>
-            <button type="button" onClick={() => loginWithProvider("google")}>
-              Google Workspace
-            </button>
-            <button type="button" onClick={() => loginWithProvider("microsoft")}>
-              Microsoft Entra ID
-            </button>
+            <SignInButton mode="modal">
+              <button type="button">SSO Institucional</button>
+            </SignInButton>
+            <SignInButton mode="modal">
+              <button type="button">Google Workspace</button>
+            </SignInButton>
+            <SignInButton mode="modal">
+              <button type="button">Microsoft Entra ID</button>
+            </SignInButton>
           </div>
 
           <p className="auth-note">
-            Protótipo funcional: os botões simulam o retorno de um provedor SSO. Em produção,
-            seriam conectados a OAuth/OIDC com backend e domínio verificado.
+            Autenticação real com Clerk: SSO gratuito para até 10.000 usuários ativos mensais.
           </p>
         </section>
       </main>
@@ -766,77 +703,77 @@ export default function App() {
                 ? "Hospedagem e SSO"
                 : "Configurações";
 
-  if (!session) {
-    return renderLogin();
-  }
-
   return (
-    <main className="app-shell">
-      <aside className="sidebar">
-        <div className="brand">
-          <span className="brand-mark">SF</span>
-          <div>
-            <strong>StudyFlow</strong>
-            <span>SaaS adaptativo</span>
-          </div>
-        </div>
+    <>
+      <SignedOut>
+        {renderLogin()}
+      </SignedOut>
+      <SignedIn>
+        <main className="app-shell">
+          <aside className="sidebar">
+            <div className="brand">
+              <span className="brand-mark">SF</span>
+              <div>
+                <strong>StudyFlow</strong>
+                <span>SaaS adaptativo</span>
+              </div>
+            </div>
 
-        <nav className="nav-list" aria-label="Páginas do sistema">
-          {(Object.keys(routeLabels) as Route[]).map((item) => (
-            <button
-              className={route === item ? "active" : ""}
-              key={item}
-              onClick={() => navigate(item)}
-              type="button"
-            >
-              {routeLabels[item]}
-            </button>
-          ))}
-        </nav>
+            <nav className="nav-list" aria-label="Páginas do sistema">
+              {(Object.keys(routeLabels) as Route[]).map((item) => (
+                <button
+                  className={route === item ? "active" : ""}
+                  key={item}
+                  onClick={() => navigate(item)}
+                  type="button"
+                >
+                  {routeLabels[item]}
+                </button>
+              ))}
+            </nav>
 
-        <div className="tenant-card">
-          <span>Workspace</span>
-          <strong>{workspace.institution}</strong>
-          <small>{workspace.className}</small>
-        </div>
+            <div className="tenant-card">
+              <span>Workspace</span>
+              <strong>{workspace.institution}</strong>
+              <small>{workspace.className}</small>
+            </div>
 
-        <div className="user-card">
-          <span>Usuário autenticado</span>
-          <strong>{session.userName}</strong>
-          <small>{providerLabels[session.provider]}</small>
-          <button type="button" onClick={logout}>
-            Sair
-          </button>
-        </div>
-      </aside>
+            <div className="user-card">
+              <span>Usuário autenticado</span>
+              <strong>{user?.firstName || user?.username || "Usuário"}</strong>
+              <small>Clerk SSO</small>
+              <UserButton />
+            </div>
+          </aside>
 
-      <section className="workspace">
-        <header className="topbar">
-          <div>
-            <p className="eyebrow">StudyFlow SaaS</p>
-            <h1>{pageTitle}</h1>
-          </div>
-          <button className="ghost-button" type="button" onClick={resetWorkspace}>
-            Reiniciar dados
-          </button>
-        </header>
+          <section className="workspace">
+            <header className="topbar">
+              <div>
+                <p className="eyebrow">StudyFlow SaaS</p>
+                <h1>{pageTitle}</h1>
+              </div>
+              <button className="ghost-button" type="button" onClick={resetWorkspace}>
+                Reiniciar dados
+              </button>
+            </header>
 
-        {route === "inicio" && renderHome()}
-        {route === "trilhas" && renderTrails()}
-        {route === "painel" && renderDashboard()}
-        {route === "atividade" && renderActivity()}
-        {route === "historico" && renderHistory()}
-        {route === "implantacao" && renderDeployment()}
-        {route === "configuracoes" && renderSettings()}
+            {route === "inicio" && renderHome()}
+            {route === "trilhas" && renderTrails()}
+            {route === "painel" && renderDashboard()}
+            {route === "atividade" && renderActivity()}
+            {route === "historico" && renderHistory()}
+            {route === "implantacao" && renderDeployment()}
+            {route === "configuracoes" && renderSettings()}
 
-        <footer className="app-footer">
-          <strong>StudyFlow</strong>
-          <span>
-            Projeto desenvolvido por Gustavo Ribeiro para a disciplina Pensamento Computacional,
-            Ciência da Computação - Centro Universitário Internacional Uninter.
-          </span>
-        </footer>
-      </section>
-    </main>
-  );
+            <footer className="app-footer">
+              <strong>StudyFlow</strong>
+              <span>
+                Projeto desenvolvido por Gustavo Ribeiro para a disciplina Pensamento Computacional,
+                Ciência da Computação - Centro Universitário Internacional Uninter.
+              </span>
+            </footer>
+          </section>
+        </main>
+      </SignedIn>
+    </>
 }
