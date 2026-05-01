@@ -125,16 +125,20 @@ A aplicação atual apresenta uma interface moderna de SaaS educacional, com pai
 
 Recursos implementados:
 
+- Tela de login antes do acesso ao sistema  
+- Simulação de autenticação por e-mail e SSO institucional, Google Workspace e Microsoft Entra ID  
 - Menu inicial com navegação entre páginas internas do sistema  
 - Catálogo de trilhas de aprendizagem por objetivo educacional  
 - Página específica de painel para acompanhamento do aluno e da turma  
+- Página de hospedagem com checklist para publicação real do SaaS  
 - Página de configurações com sete temas visuais selecionáveis  
 - Dashboard com métricas de nível, taxa de acerto, tempo médio e alunos ativos  
 - Cadastro simples de aluno, instituição e turma dentro da sessão  
-- Atividades com alternativas e correção automática  
-- Cronômetro real para medir o tempo de resposta do aluno  
+- Ambiente de atividade com início manual da questão, evitando cronômetro automático ao abrir a aba  
+- Atividades com alternativas, correção automática e cronômetro real  
 - Histórico de desempenho por trilha, conteúdo, resultado, tempo e dificuldade  
 - Algoritmo de recomendação baseado em acertos, erros e tempo médio  
+- Footer com créditos do autor, instituição, curso e disciplina  
 - Interface visual mais moderna, limpa e profissional para representar um SaaS educacional  
 
 Temas disponíveis:
@@ -163,6 +167,18 @@ npm install
 npm run dev
 ```
 
+### Gerar versão de produção
+
+```bash
+cd codigo
+npm install
+npm run build
+```
+
+O build final fica em `codigo/dist`.
+
+Orientações de hospedagem estão disponíveis em `codigo/DEPLOY.md`.
+
 ### Rodar como aplicação desktop com Tauri
 
 Para usar o Tauri, é necessário ter Node.js, npm e Rust instalados.
@@ -179,7 +195,9 @@ npm run tauri dev
 - `Design.md`: descrição da arquitetura e módulos do sistema
 - `Desafios.md`: desafios técnicos e de larga escala
 - `Diagrama.png`: diagrama do sistema
+- `Aula_Abstracoes_PensamentoComputacional`: atividade específica da aula de abstrações
 - `codigo`: aplicação web/desktop e arquivos necessários para execução
+- `codigo/DEPLOY.md`: orientações para publicar a aplicação em hospedagem real
 - `codigo/src`: interface, dados de exemplo, cronômetro real e algoritmo de recomendação
 - `codigo/src-tauri`: configuração inicial para gerar app desktop
 - `codigo/package.json`: scripts e dependências do projeto

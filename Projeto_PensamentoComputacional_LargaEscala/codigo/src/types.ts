@@ -1,6 +1,22 @@
 export type Difficulty = "iniciante" | "intermediario" | "avancado";
 
-export type Route = "inicio" | "trilhas" | "painel" | "atividade" | "historico" | "configuracoes";
+export type Route =
+  | "inicio"
+  | "trilhas"
+  | "painel"
+  | "atividade"
+  | "historico"
+  | "implantacao"
+  | "configuracoes";
+
+export type AuthProvider = "email" | "google" | "microsoft" | "institucional";
+
+export type AuthSession = {
+  userName: string;
+  email: string;
+  provider: AuthProvider;
+  role: "aluno" | "professor" | "admin";
+};
 
 export type Student = {
   name: string;

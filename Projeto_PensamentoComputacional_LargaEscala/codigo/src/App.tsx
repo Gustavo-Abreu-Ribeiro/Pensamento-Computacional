@@ -1,7 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { activities, trails } from "./data";
 import { calculateAccuracy, calculateAverageTime, recommendNextStep } from "./recommendation";
-import type { Activity, LearningTrail, PerformanceRecord, Route, Student } from "./types";
+import type {
+  Activity,
+  AuthProvider,
+  AuthSession,
+  LearningTrail,
+  PerformanceRecord,
+  Route,
+  Student
+} from "./types";
 
 const initialStudent: Student = {
   name: "Gustavo",
@@ -10,9 +18,9 @@ const initialStudent: Student = {
 };
 
 const initialWorkspace = {
-  institution: "Escola Modelo",
-  className: "Turma CC-1",
-  goal: "Reforcar algoritmos, abstracao e sistemas de larga escala"
+  institution: "Centro Universitário Internacional Uninter",
+  className: "Ciência da Computação",
+  goal: "Reforçar algoritmos, abstração e sistemas de larga escala"
 };
 
 const routeLabels: Record<Route, string> = {
@@ -21,7 +29,15 @@ const routeLabels: Record<Route, string> = {
   painel: "Painel",
   atividade: "Atividade",
   historico: "Histórico",
+  implantacao: "Hospedagem",
   configuracoes: "Configurações"
+};
+
+const providerLabels: Record<AuthProvider, string> = {
+  email: "E-mail",
+  google: "Google Workspace",
+  microsoft: "Microsoft Entra ID",
+  institucional: "SSO Institucional"
 };
 
 const themes = [
@@ -106,19 +122,35 @@ function getTrailProgress(trail: LearningTrail, records: PerformanceRecord[]) {
   };
 }
 
+function createSession(provider: AuthProvider, email: string, userName?: string): AuthSession {
+  return {
+    userName: userName?.trim() || email.split("@")[0] || "Gustavo",
+    email,
+    provider,
+    role: provider === "institucional" ? "professor" : "aluno"
+  };
+}
+
 export default function App() {
   const [route, setRoute] = useState<Route>("inicio");
   const [theme, setTheme] = useState<ThemeId>(() => {
     const savedTheme = window.localStorage.getItem("studyflow-theme");
     return themes.some((item) => item.id === savedTheme) ? (savedTheme as ThemeId) : "default";
   });
+  const [session, setSession] = useState<AuthSession | null>(() => {
+    const savedSession = window.localStorage.getItem("studyflow-session");
+    return savedSession ? (JSON.parse(savedSession) as AuthSession) : null;
+  });
+  const [loginName, setLoginName] = useState("Gustavo Ribeiro");
+  const [loginEmail, setLoginEmail] = useState("gustavo.ribeiro@uninter.edu");
   const [selectedTrailId, setSelectedTrailId] = useState(trails[0].id);
   const [student, setStudent] = useState<Student>(initialStudent);
   const [workspace, setWorkspace] = useState(initialWorkspace);
   const [records, setRecords] = useState<PerformanceRecord[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [startedAt, setStartedAt] = useState(() => Date.now());
+  const [startedAt, setStartedAt] = useState<number | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [activityStarted, setActivityStarted] = useState(false);
 
   const selectedTrail = trails.find((trail) => trail.id === selectedTrailId) ?? trails[0];
   const trailActivities = activities.filter((activity) => activity.trailId === selectedTrail.id);
@@ -146,39 +178,75 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
+    if (session) {
+      window.localStorage.setItem("studyflow-session", JSON.stringify(session));
+    } else {
+      window.localStorage.removeItem("studyflow-session");
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (!activityStarted || startedAt === null) {
+      return;
+    }
+
     const timer = window.setInterval(() => {
       setElapsedSeconds(Math.round((Date.now() - startedAt) / 1000));
     }, 1000);
 
     return () => window.clearInterval(timer);
-  }, [startedAt]);
+  }, [activityStarted, startedAt]);
 
   useEffect(() => {
-    resetActivityTimer();
+    setActivityStarted(false);
+    setStartedAt(null);
+    setElapsedSeconds(0);
     setSelectedOption(null);
   }, [currentActivity.id]);
 
-  function resetActivityTimer() {
+  function startActivity() {
+    setActivityStarted(true);
+    setSelectedOption(null);
     setStartedAt(Date.now());
     setElapsedSeconds(0);
   }
 
   function navigate(nextRoute: Route) {
     setRoute(nextRoute);
-    if (nextRoute === "atividade") {
-      resetActivityTimer();
-    }
   }
 
   function openTrail(trailId: string) {
     setSelectedTrailId(trailId);
-    setSelectedOption(null);
     setRoute("atividade");
-    resetActivityTimer();
+  }
+
+  function loginWithProvider(provider: AuthProvider) {
+    const fallbackEmail =
+      provider === "google"
+        ? "gustavo.ribeiro@gmail.com"
+        : provider === "microsoft"
+          ? "gustavo.ribeiro@outlook.com"
+          : "gustavo.ribeiro@uninter.edu";
+    const nextSession = createSession(provider, loginEmail || fallbackEmail, loginName);
+    setSession(nextSession);
+    setStudent((current) => ({ ...current, name: nextSession.userName }));
+  }
+
+  function submitLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    loginWithProvider("email");
+  }
+
+  function logout() {
+    setSession(null);
+    setRoute("inicio");
+    setActivityStarted(false);
+    setStartedAt(null);
+    setElapsedSeconds(0);
   }
 
   function submitAnswer() {
-    if (selectedOption === null) {
+    if (selectedOption === null || !activityStarted || startedAt === null) {
       return;
     }
 
@@ -206,17 +274,85 @@ export default function App() {
       streak: correct ? current.streak + 1 : 0
     }));
     setSelectedOption(null);
-    resetActivityTimer();
+    setActivityStarted(false);
+    setStartedAt(null);
+    setElapsedSeconds(0);
   }
 
   function resetWorkspace() {
     setRoute("inicio");
     setSelectedTrailId(trails[0].id);
-    setStudent(initialStudent);
+    setStudent(session ? { ...initialStudent, name: session.userName } : initialStudent);
     setWorkspace(initialWorkspace);
     setRecords([]);
     setSelectedOption(null);
-    resetActivityTimer();
+    setActivityStarted(false);
+    setStartedAt(null);
+    setElapsedSeconds(0);
+  }
+
+  function renderLogin() {
+    return (
+      <main className="auth-shell">
+        <section className="auth-hero">
+          <span className="brand-mark">SF</span>
+          <p className="eyebrow">StudyFlow SaaS</p>
+          <h1>Aprendizagem adaptativa para instituições de ensino.</h1>
+          <p>
+            Plataforma com trilhas, desempenho em tempo real, recomendação adaptativa, SSO e
+            preparação para hospedagem em produção.
+          </p>
+          <div className="auth-badges">
+            <span>Multi-instituição</span>
+            <span>SSO ready</span>
+            <span>Deploy web</span>
+          </div>
+        </section>
+
+        <section className="auth-card">
+          <div>
+            <p className="eyebrow">Acesso seguro</p>
+            <h2>Entrar no StudyFlow</h2>
+          </div>
+
+          <form className="auth-form" onSubmit={submitLogin}>
+            <label>
+              <span>Nome</span>
+              <input value={loginName} onChange={(event) => setLoginName(event.target.value)} />
+            </label>
+            <label>
+              <span>E-mail institucional</span>
+              <input
+                type="email"
+                value={loginEmail}
+                onChange={(event) => setLoginEmail(event.target.value)}
+              />
+            </label>
+            <button className="primary-button" type="submit">
+              Entrar com e-mail
+            </button>
+          </form>
+
+          <div className="sso-divider">ou usar SSO</div>
+          <div className="sso-grid">
+            <button type="button" onClick={() => loginWithProvider("institucional")}>
+              SSO Institucional
+            </button>
+            <button type="button" onClick={() => loginWithProvider("google")}>
+              Google Workspace
+            </button>
+            <button type="button" onClick={() => loginWithProvider("microsoft")}>
+              Microsoft Entra ID
+            </button>
+          </div>
+
+          <p className="auth-note">
+            Protótipo funcional: os botões simulam o retorno de um provedor SSO. Em produção,
+            seriam conectados a OAuth/OIDC com backend e domínio verificado.
+          </p>
+        </section>
+      </main>
+    );
   }
 
   function renderMetrics() {
@@ -231,7 +367,7 @@ export default function App() {
           <strong>{accuracy}%</strong>
         </article>
         <article className="metric-card accent-yellow">
-          <span>Tempo medio</span>
+          <span>Tempo médio</span>
           <strong>{averageTime}s</strong>
         </article>
         <article className="metric-card accent-pink">
@@ -247,16 +383,16 @@ export default function App() {
       <>
         <section className="hero-panel">
           <div>
-            <p className="eyebrow">Aprendizagem adaptativa em prática</p>
-            <h1>Organize trilhas, registre desempenho e recomende o próximo passo.</h1>
+            <p className="eyebrow">Ambiente institucional</p>
+            <h1>Gerencie trilhas, dados de desempenho e recomendações em um SaaS educacional.</h1>
             <p>
-              A plataforma acompanha acertos, erros e tempo real de resposta para ajustar o nível
-              do aluno durante a sessão.
+              O StudyFlow organiza turmas, mede tempo de resposta apenas quando a atividade é
+              iniciada e transforma dados recentes em decisões pedagógicas.
             </p>
           </div>
           <div className="hero-actions">
             <button className="primary-button" type="button" onClick={() => navigate("trilhas")}>
-              Ver trilhas
+              Selecionar trilha
             </button>
             <button className="ghost-button" type="button" onClick={() => navigate("painel")}>
               Abrir painel
@@ -269,18 +405,18 @@ export default function App() {
         <section className="quick-grid" aria-label="Ações principais">
           <button className="quick-card" type="button" onClick={() => navigate("trilhas")}>
             <span>01</span>
-            <strong>Escolher trilha</strong>
-            <p>Selecione uma sequencia de conteudos por objetivo de aprendizagem.</p>
+            <strong>Selecionar trilha</strong>
+            <p>Escolha um objetivo de aprendizagem antes de entrar no ambiente de atividade.</p>
           </button>
-          <button className="quick-card" type="button" onClick={() => navigate("atividade")}>
+          <button className="quick-card" type="button" onClick={() => navigate("painel")}>
             <span>02</span>
-            <strong>Responder atividade</strong>
-            <p>O sistema mede o tempo automaticamente e registra o resultado.</p>
+            <strong>Acompanhar painel</strong>
+            <p>Visualize progresso, desempenho recente e recomendação pedagógica.</p>
           </button>
-          <button className="quick-card" type="button" onClick={() => navigate("historico")}>
+          <button className="quick-card" type="button" onClick={() => navigate("implantacao")}>
             <span>03</span>
-            <strong>Analisar dados</strong>
-            <p>Use o histórico para reconhecer padrões e orientar revisões.</p>
+            <strong>Preparar hospedagem</strong>
+            <p>Veja os passos para publicar a aplicação em um ambiente web real.</p>
           </button>
         </section>
       </>
@@ -293,7 +429,7 @@ export default function App() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">Catálogo de trilhas</p>
-            <h2>Escolha o foco da aprendizagem</h2>
+            <h2>Escolha o foco antes de iniciar uma atividade</h2>
           </div>
           <button className="ghost-button" type="button" onClick={() => navigate("painel")}>
             Ver painel
@@ -305,7 +441,7 @@ export default function App() {
             const progress = getTrailProgress(trail, records);
             return (
               <article className={`trail-card ${trail.color}`} key={trail.id}>
-                <span>{progress.percent}% concluido</span>
+                <span>{progress.percent}% concluído</span>
                 <h3>{trail.title}</h3>
                 <p>{trail.description}</p>
                 <small>{trail.target}</small>
@@ -328,7 +464,7 @@ export default function App() {
       <section className="page-stack">
         {renderMetrics()}
 
-        <section className="setup-panel" aria-label="Configuracao do aluno">
+        <section className="setup-panel" aria-label="Configuração do aluno">
           <label>
             <span>Aluno</span>
             <input
@@ -337,7 +473,7 @@ export default function App() {
             />
           </label>
           <label>
-            <span>Instituicao</span>
+            <span>Instituição</span>
             <input
               onChange={(event) =>
                 setWorkspace((current) => ({ ...current, institution: event.target.value }))
@@ -346,7 +482,7 @@ export default function App() {
             />
           </label>
           <label>
-            <span>Turma</span>
+            <span>Curso/Turma</span>
             <input
               onChange={(event) =>
                 setWorkspace((current) => ({ ...current, className: event.target.value }))
@@ -375,18 +511,18 @@ export default function App() {
                 <strong>{trailAccuracy}%</strong>
               </div>
               <div>
-                <span>Tempo medio</span>
+                <span>Tempo médio</span>
                 <strong>{trailAverageTime}s</strong>
               </div>
             </div>
             <button className="primary-button" type="button" onClick={() => navigate("atividade")}>
-              Continuar atividade
+              Abrir ambiente da trilha
             </button>
           </article>
 
           <aside className="insights-panel">
             <div className={`recommendation ${recommendation.action}`}>
-              <span>Proxima decisao</span>
+              <span>Próxima decisão</span>
               <strong>{recommendation.action}</strong>
               <p>{recommendation.message}</p>
             </div>
@@ -394,9 +530,9 @@ export default function App() {
               <h3>Plano da turma</h3>
               <p>{workspace.goal}</p>
               <ul>
-                <li>Monitorar tempo real de resposta</li>
-                <li>Identificar erros recorrentes por conteudo</li>
-                <li>Ajustar dificuldade conforme desempenho</li>
+                <li>Monitorar tempo real apenas após iniciar atividade</li>
+                <li>Identificar erros recorrentes por conteúdo</li>
+                <li>Ajustar dificuldade conforme desempenho recente</li>
               </ul>
             </div>
           </aside>
@@ -412,46 +548,70 @@ export default function App() {
           <div className="panel-heading">
             <div>
               <p className="eyebrow">{selectedTrail.title}</p>
-              <h2>{currentActivity.title}</h2>
+              <h2>{activityStarted ? currentActivity.title : "Ambiente da trilha"}</h2>
             </div>
             <span className="difficulty">{currentActivity.difficulty}</span>
           </div>
 
-          <div className="live-row">
-            <div>
-              <span>Tempo real</span>
-              <strong>{formatTimer(elapsedSeconds)}</strong>
+          {!activityStarted ? (
+            <div className="activity-start">
+              <p>
+                Esta área não inicia a contagem automaticamente. Primeiro revise a trilha ativa,
+                confira a próxima atividade sugerida e clique em iniciar quando estiver pronto.
+              </p>
+              <div className="activity-preview">
+                <span>Próxima atividade</span>
+                <strong>{currentActivity.title}</strong>
+                <small>{currentActivity.topic} · estimativa de {currentActivity.estimatedMinutes} min</small>
+              </div>
+              <div className="hero-actions">
+                <button className="primary-button" type="button" onClick={startActivity}>
+                  Iniciar atividade
+                </button>
+                <button className="ghost-button" type="button" onClick={() => navigate("trilhas")}>
+                  Trocar trilha
+                </button>
+              </div>
             </div>
-            <div>
-              <span>Meta da atividade</span>
-              <strong>{currentActivity.estimatedMinutes} min</strong>
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className="live-row">
+                <div>
+                  <span>Tempo real</span>
+                  <strong>{formatTimer(elapsedSeconds)}</strong>
+                </div>
+                <div>
+                  <span>Meta da atividade</span>
+                  <strong>{currentActivity.estimatedMinutes} min</strong>
+                </div>
+              </div>
 
-          <p className="question">{currentActivity.question}</p>
+              <p className="question">{currentActivity.question}</p>
 
-          <div className="options-list">
-            {currentActivity.options.map((option, index) => (
-              <label className="option-item" key={option}>
-                <input
-                  checked={selectedOption === index}
-                  name="answer"
-                  onChange={() => setSelectedOption(index)}
-                  type="radio"
-                />
-                <span>{option}</span>
-              </label>
-            ))}
-          </div>
+              <div className="options-list">
+                {currentActivity.options.map((option, index) => (
+                  <label className="option-item" key={option}>
+                    <input
+                      checked={selectedOption === index}
+                      name="answer"
+                      onChange={() => setSelectedOption(index)}
+                      type="radio"
+                    />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
 
-          <button className="primary-button" disabled={selectedOption === null} onClick={submitAnswer}>
-            Enviar resposta
-          </button>
+              <button className="primary-button" disabled={selectedOption === null} onClick={submitAnswer}>
+                Enviar resposta
+              </button>
+            </>
+          )}
         </article>
 
         <aside className="insights-panel">
           <div className={`recommendation ${recommendation.action}`}>
-            <span>Recomendacao atual</span>
+            <span>Recomendação atual</span>
             <strong>{recommendation.action}</strong>
             <p>{recommendation.message}</p>
           </div>
@@ -483,13 +643,13 @@ export default function App() {
         <div className="history-table" role="table" aria-label="Histórico de desempenho">
           <div className="history-row header" role="row">
             <span>Trilha</span>
-            <span>Conteudo</span>
+            <span>Conteúdo</span>
             <span>Resultado</span>
             <span>Tempo</span>
             <span>Dificuldade</span>
           </div>
           {records.length === 0 ? (
-            <p className="empty-state">Responda a primeira atividade para gerar dados.</p>
+            <p className="empty-state">Inicie uma trilha e responda uma atividade para gerar dados.</p>
           ) : (
             records.map((record, index) => {
               const trail = trails.find((item) => item.id === record.trailId);
@@ -509,16 +669,61 @@ export default function App() {
     );
   }
 
+  function renderDeployment() {
+    return (
+      <section className="page-stack">
+        <section className="settings-panel">
+          <p className="eyebrow">Produção</p>
+          <h2>Preparação para hospedagem real</h2>
+          <p>
+            O frontend já pode ser publicado como aplicação estática após `npm run build`.
+            Em um SaaS real, autenticação SSO, banco de dados e APIs ficariam em serviços de backend.
+          </p>
+        </section>
+
+        <section className="deployment-grid">
+          <article className="deployment-card">
+            <span>Frontend</span>
+            <h3>Vercel, Netlify ou Cloudflare Pages</h3>
+            <p>Publica a pasta `dist` gerada pelo Vite e fornece link HTTPS público.</p>
+          </article>
+          <article className="deployment-card">
+            <span>Autenticação</span>
+            <h3>OAuth/OIDC</h3>
+            <p>Integra Google Workspace, Microsoft Entra ID ou provedor institucional.</p>
+          </article>
+          <article className="deployment-card">
+            <span>Dados</span>
+            <h3>Backend e banco</h3>
+            <p>Persistência de alunos, trilhas, registros e relatórios em banco seguro.</p>
+          </article>
+        </section>
+
+        <section className="module-list">
+          <h3>Checklist de produção</h3>
+          <ul>
+            <li>Configurar domínio da instituição</li>
+            <li>Gerar build com `npm run build`</li>
+            <li>Publicar `codigo/dist` em hospedagem web</li>
+            <li>Conectar SSO real via OAuth/OIDC</li>
+            <li>Criar API para persistir desempenho e histórico</li>
+            <li>Aplicar políticas de privacidade para dados educacionais</li>
+          </ul>
+        </section>
+      </section>
+    );
+  }
+
   function renderSettings() {
     return (
       <section className="page-stack">
         <section className="settings-panel">
           <div>
-            <p className="eyebrow">Personalizacao</p>
+            <p className="eyebrow">Personalização</p>
             <h2>Escolha a identidade visual do SaaS</h2>
             <p>
               Os temas ajudam a testar como o StudyFlow pode se adaptar a diferentes escolas,
-              marcas ou preferencias de uso sem alterar a logica do sistema.
+              marcas ou preferências de uso sem alterar a lógica do sistema.
             </p>
           </div>
         </section>
@@ -557,7 +762,14 @@ export default function App() {
             ? "Ambiente de atividade"
             : route === "historico"
               ? "Histórico e análise"
-              : "Configurações";
+              : route === "implantacao"
+                ? "Hospedagem e SSO"
+                : "Configurações";
+
+  if (!session) {
+    return renderLogin();
+  }
+
   return (
     <main className="app-shell">
       <aside className="sidebar">
@@ -569,7 +781,7 @@ export default function App() {
           </div>
         </div>
 
-        <nav className="nav-list" aria-label="Paginas do sistema">
+        <nav className="nav-list" aria-label="Páginas do sistema">
           {(Object.keys(routeLabels) as Route[]).map((item) => (
             <button
               className={route === item ? "active" : ""}
@@ -587,6 +799,15 @@ export default function App() {
           <strong>{workspace.institution}</strong>
           <small>{workspace.className}</small>
         </div>
+
+        <div className="user-card">
+          <span>Usuário autenticado</span>
+          <strong>{session.userName}</strong>
+          <small>{providerLabels[session.provider]}</small>
+          <button type="button" onClick={logout}>
+            Sair
+          </button>
+        </div>
       </aside>
 
       <section className="workspace">
@@ -596,7 +817,7 @@ export default function App() {
             <h1>{pageTitle}</h1>
           </div>
           <button className="ghost-button" type="button" onClick={resetWorkspace}>
-            Reiniciar
+            Reiniciar dados
           </button>
         </header>
 
@@ -605,7 +826,16 @@ export default function App() {
         {route === "painel" && renderDashboard()}
         {route === "atividade" && renderActivity()}
         {route === "historico" && renderHistory()}
+        {route === "implantacao" && renderDeployment()}
         {route === "configuracoes" && renderSettings()}
+
+        <footer className="app-footer">
+          <strong>StudyFlow</strong>
+          <span>
+            Projeto desenvolvido por Gustavo Ribeiro para a disciplina Pensamento Computacional,
+            Ciência da Computação - Centro Universitário Internacional Uninter.
+          </span>
+        </footer>
       </section>
     </main>
   );
