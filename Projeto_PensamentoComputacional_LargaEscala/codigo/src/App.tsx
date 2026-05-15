@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import { activities, trails } from "./data";
 import { calculateAccuracy, calculateAverageTime, recommendNextStep } from "./recommendation";
+import studyFlowLogo from "./studyflow-logo.png";
 import type {
   Activity,
   LearningTrail,
@@ -9,6 +10,10 @@ import type {
   Route,
   Student
 } from "./types";
+
+function BrandLogo() {
+  return <img alt="StudyFlow logo" src={studyFlowLogo} />;
+}
 
 const initialWorkspace = {
   institution: "UDF",
@@ -314,7 +319,7 @@ export default function App() {
     return (
       <main className="auth-shell">
         <section className="auth-hero">
-          <span className="brand-mark">SF</span>
+          <span className="brand-mark"><BrandLogo /></span>
           <p className="eyebrow">Pensamento Computacional</p>
           <h1>Trilhas de aprendizagem que se adaptam ao seu ritmo.</h1>
           <p>
@@ -752,7 +757,7 @@ export default function App() {
           <aside className={isMobileMenuOpen ? "sidebar open" : "sidebar"}>
             <div className="sidebar-header">
               <div className="brand">
-                <span className="brand-mark">SF</span>
+                <span className="brand-mark"><BrandLogo /></span>
                 <div>
                   <strong>StudyFlow</strong>
                   <span>SaaS adaptativo</span>

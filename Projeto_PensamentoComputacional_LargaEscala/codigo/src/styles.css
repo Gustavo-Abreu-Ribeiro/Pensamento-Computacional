@@ -344,13 +344,16 @@ input:focus-visible {
   margin: auto auto 32px auto;
   position: relative;
   z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--primary) !important;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+  color: #ffffff;
   font-size: 1.4rem;
+  font-weight: 900;
+  line-height: 1;
   width: 60px;
   height: 60px;
+  border-radius: var(--radius-sm);
 }
 
 .auth-hero h1 {
@@ -499,24 +502,46 @@ input:focus-visible {
 }
 
 .brand-mark {
-  align-items: center;
-  background: var(--primary);
-  border-radius: var(--radius-sm);
-  color: #ffffff;
-  display: inline-grid;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+    color: #ffffff !important;
+    display: inline-flex;
+    font-size: 1.05rem;
+    font-weight: 900;
+    height: 58px;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    min-width: 58px;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    width: 58px;
+    overflow: hidden;
+  }
+
+.brand-mark img {
+  display: block;
   flex: 0 0 auto;
-  font-size: 0.9rem;
-  font-weight: 900;
-  height: 46px;
-  justify-content: center;
-  letter-spacing: 0;
-  line-height: 1;
-  place-items: center;
-  text-align: center;
-  width: 46px;
+  height: 74%;
+  object-fit: contain;
+  object-position: center;
+  width: 74%;
 }
 
-.menu-toggle {
+.brand-mark::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.20), transparent 34%);
+  }
+
+
+
+  .menu-toggle {
   align-items: center;
   background: var(--surface-solid);
   border: 1px solid var(--border);
@@ -565,7 +590,7 @@ input:focus-visible {
 
 :root[data-theme="brutal"] .brand-mark {
   border: 3px solid #ffffff;
-  color: #111111;
+  color: #ffffff !important;
 }
 
 .brand strong,
@@ -1703,11 +1728,35 @@ h3 {
   }
 
   .brand-mark {
-    border-radius: 12px;
-    font-size: 0.78rem;
-    height: 40px;
-    width: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    height: 44px;
+    width: 44px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+    color: #ffffff !important;
+    line-height: 1;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
   }
+
+  .brand-mark img {
+    height: 72%;
+    width: 72%;
+  }
+
+  .brand-mark::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.18), transparent 32%);
+  }
+
 
   .brand strong {
     font-size: 1rem;
